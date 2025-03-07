@@ -1,0 +1,4 @@
+git clone https://github.com/mehedilms/pokemon-battle-simulator.git
+cd pokemon-battle-simulator
+npm install
+npm run dev
