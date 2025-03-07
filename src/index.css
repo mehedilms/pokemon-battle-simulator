@@ -1,0 +1,674 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* White background */
+    --foreground: 220 20% 20%; /* Dark text */
+
+    --card: 220 20% 99%; /* Light card color */
+    --card-foreground: 220 20% 20%;
+
+    --popover: 220 20% 99%;
+    --popover-foreground: 220 20% 20%;
+
+    --primary: 225 85% 60%; /* blue/purple primary */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 226 70% 65%; /* Lighter blue/purple secondary */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 20% 98%; /* Light muted */
+    --muted-foreground: 220 20% 45%;
+
+    --accent: 0 85% 70%; /* Red accent */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 85% 70%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 93%; /* Light border */
+    --input: 220 20% 93%;
+    --ring: 225 85% 60%;
+
+    --radius: 0.5rem; /* Rounded corners */
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 20% 15%; /* Dark background */
+    --foreground: 220 20% 98%;
+
+    --card: 222 20% 20%;
+    --card-foreground: 220 20% 98%;
+
+    --popover: 222 20% 20%;
+    --popover-foreground: 220 20% 98%;
+
+    --primary: 225 85% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 20% 20%;
+    --secondary-foreground: 220 20% 98%;
+
+    --muted: 222 20% 25%;
+    --muted-foreground: 222 20% 70%;
+
+    --accent: 0 85% 70%;
+    --accent-foreground: 220 20% 98%;
+
+    --destructive: 0 62.8% 40.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 20% 30%;
+    --input: 222 20% 30%;
+    --ring: 225 85% 60%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-white text-foreground;
+    font-family: "Inter", system-ui, sans-serif;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234263eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-position: center;
+    background-size: 60px 60px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium text-pixels-dark;
+  }
+  
+  .font-pixel {
+    font-family: 'Kemco Pixel', monospace;
+    font-size: 1.25rem;
+  }
+}
+
+/* Preload the fonts before using them */
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kemco Pixel";
+  src: url("/lovable-uploads/330ff27d-c87c-4474-b1de-6af5fcbdf0de.png") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Depixelklein";
+  src: url("/lovable-uploads/330ff27d-c87c-4474-b1de-6af5fcbdf0de.png") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer components {
+  /* Modern components */
+  .pokemon-stat-card {
+    @apply bg-white rounded-lg relative p-3 text-pixels-dark border border-pixels-border shadow-md;
+  }
+  
+  .hp-bar-container {
+    @apply relative h-3 w-full bg-gray-100 rounded-full overflow-hidden border border-gray-200;
+  }
+  
+  .hp-bar {
+    @apply h-full transition-all duration-700;
+  }
+  
+  .exp-bar-container {
+    @apply relative h-2 w-full bg-gray-100 rounded-full overflow-hidden border border-gray-200;
+  }
+  
+  .exp-bar {
+    @apply h-full bg-pixels-primary transition-all duration-700;
+  }
+  
+  .game-boy-menu {
+    @apply bg-white rounded-lg text-sm shadow-md border border-pixels-border;
+  }
+  
+  .game-boy-dialog {
+    @apply bg-white rounded-lg shadow-pixels border border-pixels-border p-4;
+  }
+  
+  .game-boy-button {
+    @apply bg-pixels-primary text-white rounded-md border border-transparent shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-pixels-hover active:translate-y-0 active:shadow-pixels font-medium;
+  }
+  
+  .text-pixel {
+    @apply font-medium text-sm leading-relaxed;
+  }
+  
+  .battle-background {
+    @apply relative h-80 rounded-lg overflow-hidden shadow-pixels transition-all duration-300 border border-pixels-border;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .pokemon-card {
+    @apply p-4 bg-white rounded-lg shadow-pixels text-center animate-fade-in border border-pixels-border hover:border-pixels-primary transition-all hover:shadow-pixels-hover;
+  }
+  
+  .pokemon-type-badge {
+    @apply px-2 py-1 text-xs rounded-full capitalize text-white font-medium shadow-sm border-0;
+  }
+}
+
+/* Keep the attack animations */
+@keyframes fire-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  25% {
+    opacity: 0.7;
+    transform: scale(1) rotate(5deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(10deg);
+    box-shadow: 0 0 40px 20px rgba(255, 0, 0, 0.6);
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(1.2) rotate(-5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+  }
+}
+
+@keyframes water-attack {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.7);
+  }
+  25% {
+    opacity: 0.7;
+    transform: translateY(-10px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1.5);
+    box-shadow: 0 0 30px 10px rgba(0, 0, 255, 0.5);
+  }
+  75% {
+    opacity: 0.7;
+    transform: translateY(10px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+}
+
+@keyframes grass-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.5;
+    transform: scale(1) rotate(90deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.8) rotate(180deg);
+    box-shadow: 0 0 30px 10px rgba(0, 255, 0, 0.5);
+  }
+  75% {
+    opacity: 0.5;
+    transform: scale(1.4) rotate(270deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes electric-attack {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.1) scaleY(0.1);
+  }
+  10% {
+    opacity: 1;
+    transform: scaleX(1.5) scaleY(0.7);
+    box-shadow: 0 0 40px 15px rgba(255, 255, 0, 0.8);
+  }
+  20% {
+    transform: scaleX(0.8) scaleY(1.5);
+  }
+  30% {
+    transform: scaleX(1.5) scaleY(0.7);
+    box-shadow: 0 0 40px 15px rgba(255, 255, 0, 0.8);
+  }
+  40% {
+    transform: scaleX(0.8) scaleY(1.5);
+  }
+  50% {
+    transform: scaleX(1.5) scaleY(0.7);
+    box-shadow: 0 0 40px 15px rgba(255, 255, 0, 0.8);
+  }
+  60% {
+    transform: scaleX(0.8) scaleY(1.5);
+  }
+  70% {
+    transform: scaleX(1.2) scaleY(0.9);
+  }
+  80% {
+    transform: scaleX(1) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes psychic-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.7;
+    transform: scale(1.2) rotate(-180deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(360deg);
+    box-shadow: 0 0 40px 20px rgba(255, 0, 255, 0.6);
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(1.2) rotate(540deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(720deg);
+  }
+}
+
+@keyframes dark-attack {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(0.8);
+    box-shadow: 0 0 40px 20px rgba(0, 0, 0, 0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes fighting-attack {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) translateY(30px) scale(0.5);
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(10px) translateY(-10px) scale(1.2);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-20px) translateY(20px) scale(1.5);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(10px) translateY(-10px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30px) translateY(30px) scale(0.5);
+  }
+}
+
+@keyframes rock-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.5;
+    transform: scale(0.5) rotate(5deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(-5deg);
+    box-shadow: 0 0 20px 10px rgba(120, 80, 0, 0.6);
+  }
+  75% {
+    opacity: 0.5;
+    transform: scale(1) rotate(5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+}
+
+@keyframes poison-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  25% {
+    opacity: 0.7;
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+    filter: hue-rotate(60deg);
+    box-shadow: 0 0 30px 10px rgba(128, 0, 128, 0.5);
+  }
+  75% {
+    opacity: 0.7;
+    filter: hue-rotate(120deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+    filter: hue-rotate(180deg);
+  }
+}
+
+@keyframes ghost-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+    filter: blur(10px);
+  }
+  25% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.5) translateY(0);
+    filter: blur(0px);
+    box-shadow: 0 0 30px 10px rgba(128, 0, 128, 0.3);
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-20px);
+    filter: blur(10px);
+  }
+}
+
+@keyframes flying-attack {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.5);
+  }
+  25% {
+    opacity: 0.5;
+    transform: translateY(15px) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1.5);
+    box-shadow: 0 0 30px 10px rgba(100, 100, 255, 0.4);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translateY(-15px) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.5);
+  }
+}
+
+@keyframes normal-attack {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+    box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce-fast {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes ping-slow {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  75%, 100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes modern-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@layer utilities {
+  .animate-fire-attack {
+    animation: fire-attack 1.5s ease-in-out;
+  }
+  
+  .animate-water-attack {
+    animation: water-attack 1.5s ease-in-out;
+  }
+  
+  .animate-grass-attack {
+    animation: grass-attack 1.5s ease-in-out;
+  }
+  
+  .animate-electric-attack {
+    animation: electric-attack 1.5s ease-in-out;
+  }
+
+  .animate-psychic-attack {
+    animation: psychic-attack 1.5s ease-in-out;
+  }
+  
+  .animate-dark-attack {
+    animation: dark-attack 1.5s ease-in-out;
+  }
+  
+  .animate-fighting-attack {
+    animation: fighting-attack 1.5s ease-in-out;
+  }
+  
+  .animate-rock-attack {
+    animation: rock-attack 1.5s ease-in-out;
+  }
+  
+  .animate-poison-attack {
+    animation: poison-attack 1.5s ease-in-out;
+  }
+  
+  .animate-ghost-attack {
+    animation: ghost-attack 1.5s ease-in-out;
+  }
+  
+  .animate-flying-attack {
+    animation: flying-attack 1.5s ease-in-out;
+  }
+  
+  .animate-normal-attack {
+    animation: normal-attack 1.5s ease-in-out;
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 3s linear infinite;
+  }
+  
+  .animate-bounce-fast {
+    animation: bounce-fast 0.5s ease-in-out infinite;
+  }
+  
+  .animate-ping-slow {
+    animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  
+  .animate-fade-in-out {
+    animation: fade-in-out 1.5s ease-in-out;
+  }
+  
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  .animate-float {
+    animation: float 2s ease-in-out infinite;
+  }
+}
+
+.battle-scene-element {
+  @apply absolute opacity-75;
+  pointer-events: none;
+}
+
+.battle-clouds {
+  @apply top-0 left-0 w-full h-16;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
+}
+
+.battle-grass {
+  @apply bottom-0 left-0 w-full h-16;
+  background: linear-gradient(to top, rgba(0,100,0,0.7) 0%, rgba(0,100,0,0) 100%);
+}
+
+.battle-mountains {
+  @apply bottom-16 left-0 w-full h-32;
+  background: linear-gradient(165deg, rgba(100,100,100,0.4) 0%, rgba(100,100,100,0) 100%);
+}
+
+.battle-water {
+  @apply bottom-0 left-0 w-full h-12;
+  background: linear-gradient(to top, rgba(0,0,255,0.5) 0%, rgba(0,0,255,0) 100%);
+  animation: water-ripple 3s ease-in-out infinite;
+}
+
+@keyframes water-ripple {
+  0%, 100% {
+    height: 12px;
+  }
+  50% {
+    height: 16px;
+  }
+}
+
+@keyframes gba-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-gba-blink {
+  animation: gba-blink 1s steps(2) infinite;
+}
+
+.animate-modern-blink {
+  animation: modern-blink 1s ease-in-out infinite;
+}

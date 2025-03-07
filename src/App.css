@@ -1,0 +1,323 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: 'Kemco Pixel', monospace;
+}
+
+body {
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234263eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 60px 60px;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #4263ebaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #4263ebaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+  border: 1px solid #e9ecef;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
+}
+
+.read-the-docs {
+  color: #212529;
+}
+
+.modern-panel {
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
+}
+
+.modern-button {
+  background-color: #4263eb;
+  color: #ffffff;
+  font-family: 'Kemco Pixel', monospace;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.modern-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modern-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0,.1);
+}
+
+.pixel-button {
+  background-color: #1EAEDB;
+  color: #ffffff;
+  font-family: 'Kemco Pixel', monospace;
+  font-size: 1.25rem;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  line-height: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.pixel-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pixel-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0,.1);
+}
+
+/* Ensure Kemco font is used throughout the app */
+.font-kemco {
+  font-family: 'Kemco Pixel', monospace !important;
+  letter-spacing: 0.05em;
+}
+
+/* Fix for Pokemon sprite display */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Battle field specific styles for white background */
+.battle-background {
+  background-color: #ffffff !important;
+}
+
+.game-boy-dialog {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000;
+}
+
+.pokemon-stat-card {
+  background-color: #ffffff !important;
+  border: 2px solid #000000;
+}
+
+/* Flash animation for when a Pokemon is hit */
+@keyframes flash {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.4; }
+}
+
+.animate-flash {
+  animation: flash 0.8s ease-in-out;
+}
+
+/* Bounce animation for idle Pokemon */
+@keyframes bounce-light {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-bounce-light {
+  animation: bounce-light 2s infinite ease-in-out;
+}
+
+/* Fast bounce for attack animations */
+@keyframes bounce-fast {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-bounce-fast {
+  animation: bounce-fast 0.5s infinite ease-in-out;
+}
+
+/* Rotate and fade animation for fainted Pokemon */
+@keyframes rotate-fade {
+  0% { transform: rotate(0deg); opacity: 1; }
+  100% { transform: rotate(90deg); opacity: 0; }
+}
+
+.animate-rotate-fade {
+  animation: rotate-fade 1.5s forwards;
+}
+
+/* Spin animation for certain attack effects */
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+/* Ping animation for attack effects */
+@keyframes ping-slow {
+  0% { transform: scale(0.8); opacity: 1; }
+  75%, 100% { transform: scale(1.2); opacity: 0; }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Type-specific attack animations */
+@keyframes fire-attack {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.animate-fire-attack {
+  animation: fire-attack 1s ease-out;
+}
+
+@keyframes water-attack {
+  0% { transform: translateY(-20px); opacity: 0; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0; }
+}
+
+.animate-water-attack {
+  animation: water-attack 1s ease-in-out;
+}
+
+@keyframes electric-attack {
+  0%, 20%, 40%, 60%, 80%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(5px); }
+  5%, 25%, 45%, 65%, 85% { transform: translateX(-5px); }
+}
+
+.animate-electric-attack {
+  animation: electric-attack 0.7s ease-in-out;
+}
+
+@keyframes grass-attack {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  100% { transform: scale(1) rotate(360deg); opacity: 0.8; }
+}
+
+.animate-grass-attack {
+  animation: grass-attack 1s ease-out;
+}
+
+@keyframes psychic-attack {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  25% { transform: scale(1.1) rotate(90deg); opacity: 0.5; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+  75% { transform: scale(1.1) rotate(270deg); opacity: 0.5; }
+  100% { transform: scale(0.8) rotate(360deg); opacity: 0; }
+}
+
+.animate-psychic-attack {
+  animation: psychic-attack 1.5s ease-in-out;
+}
+
+@keyframes normal-attack {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+.animate-normal-attack {
+  animation: normal-attack 0.8s ease-out;
+}
+
+.gba-stat-card {
+  font-family: 'Kemco Pixel', monospace;
+  background-color: #ffffff;
+  border-radius: 4px;
+  text-shadow: none;
+  letter-spacing: 0;
+}
+
+.gba-message-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #ffffff;
+  border-top: 2px solid #000000;
+  font-family: 'Kemco Pixel', monospace;
+  text-align: left;
+}
+
+.gba-battle-background {
+  background-color: #f0f0f0;
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  border: 2px solid #000;
+}
+
+.gba-hp-bar {
+  height: 4px;
+  border-radius: 2px;
+  transition: width 0.5s ease-in-out;
+}
+
+.gba-pokemon-name {
+  font-family: 'Kemco Pixel', monospace;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+}
+
+.gba-level-indicator {
+  font-family: 'Kemco Pixel', monospace;
+  font-size: 0.75rem;
+}
+
+.gba-attack-message {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border-top: 2px solid black;
+  padding: 8px;
+  text-align: left;
+  font-family: 'Kemco Pixel', monospace;
+  z-index: 10;
+}
