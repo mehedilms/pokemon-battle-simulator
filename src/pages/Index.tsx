@@ -24,7 +24,7 @@ const Index = () => {
   };
 
   const handleStartBattle = () => {
-    if (playerPokemon && computerPokemon && playerMoves.length > 0 && computerMoves.length > 0) {
+    if (playerPokemon && computerPokemon) {
       setBattleStarted(true);
       setStep('battle');
     }
@@ -228,7 +228,7 @@ const Index = () => {
               
               <Button 
                 onClick={handleStartBattle}
-                disabled={playerMoves.length === 0 || computerMoves.length === 0}
+                disabled={!playerPokemon || !computerPokemon}
                 variant="pokemon"
                 className="px-8 py-4 disabled:opacity-50 disabled:pointer-events-none"
               >

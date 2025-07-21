@@ -34,7 +34,8 @@ const translations = {
     'battle.fight': 'ATTAQUE',
     'battle.bag': 'SAC',
     'battle.run': 'FUITE',
-    'battle.level': 'N'
+    'battle.level': 'N',
+    'moves.selection': 'Sélection des Attaques'
   },
   en: {
     'app.title': 'Pokemon Battle Simulator',
@@ -61,7 +62,8 @@ const translations = {
     'battle.fight': 'FIGHT',
     'battle.bag': 'BAG',
     'battle.run': 'RUN',
-    'battle.level': 'L'
+    'battle.level': 'L',
+    'moves.selection': 'Move Selection'
   }
 };
 
