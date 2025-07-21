@@ -23,15 +23,16 @@ const MoveSelector = ({ pokemon, onMovesSelect, selectedMoves }: MoveSelectorPro
       
       setLoading(true);
       try {
-        // Prendre les premiers 12 moves pour éviter trop de requêtes
-        const movesToFetch = pokemon.moves.slice(0, 12);
+        // Prendre plus d'attaques et inclure aussi les attaques de statut
+        const movesToFetch = pokemon.moves.slice(0, Math.min(30, pokemon.moves.length));
         const movePromises = movesToFetch.map(moveData => 
           fetchMoveDetails(moveData.move.url)
         );
         
         const moves = await Promise.all(movePromises);
+        // Inclure toutes les attaques valides (avec ou sans puissance)
         const validMoves = moves.filter((move): move is Move => 
-          move !== null && move.power !== null && move.power > 0
+          move !== null && (move.power > 0 || move.damage_class.name === 'status')
         );
         
         setAvailableMoves(validMoves);
@@ -117,7 +118,7 @@ const MoveSelector = ({ pokemon, onMovesSelect, selectedMoves }: MoveSelectorPro
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-80 overflow-y-auto scrollbar-thin">
           {availableMoves.map((move) => {
             const isSelected = selectedMoves.some(m => m.id === move.id);
             const canSelect = selectedMoves.length < maxMoves || isSelected;
@@ -143,20 +144,21 @@ const MoveSelector = ({ pokemon, onMovesSelect, selectedMoves }: MoveSelectorPro
                   </Badge>
                 </div>
                 <div className="w-full flex justify-between text-xs">
-                  <span>Puissance: {move.power}</span>
+                  <span>Puissance: {move.power || 'N/A'}</span>
                   <span>Précision: {move.accuracy}%</span>
                 </div>
-                <div className="w-full text-xs text-left">
+                <div className="w-full flex justify-between text-xs">
                   <span>PP: {move.pp}</span>
+                  <span className="capitalize">{move.damage_class.name}</span>
                 </div>
               </Button>
             );
           })}
         </div>
         
-        {availableMoves.length === 0 && (
+        {availableMoves.length === 0 && !loading && (
           <div className="text-center text-pixels-dark py-4">
-            <PixelText>Aucune attaque offensive disponible</PixelText>
+            <PixelText>Chargement des attaques en cours...</PixelText>
           </div>
         )}
       </CardContent>
