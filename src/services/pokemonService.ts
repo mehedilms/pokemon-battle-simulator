@@ -2,7 +2,7 @@ import { Pokemon, Move } from '../types/pokemon';
 
 const API_URL = 'https://pokeapi.co/api/v2';
 
-export const fetchPokemonList = async (limit = 151, offset = 0) => {
+export const fetchPokemonList = async (limit = 1010, offset = 0) => {
   try {
     const response = await fetch(`${API_URL}/pokemon?limit=${limit}&offset=${offset}`);
     const data = await response.json();
@@ -59,8 +59,8 @@ export const fetchMoveDetails = async (moveUrl: string): Promise<Move | null> =>
 
 export const fetchRandomPokemon = async (): Promise<Pokemon | null> => {
   try {
-    // Get a random ID between 1 and 898 (total number of Pokémon as of Gen 8)
-    const randomId = Math.floor(Math.random() * 898) + 1;
+    // Get a random ID between 1 and 1010 (total number of Pokémon as of Gen 9)
+    const randomId = Math.floor(Math.random() * 1010) + 1;
     return await fetchPokemonByNameOrId(randomId);
   } catch (error) {
     console.error('Error fetching random Pokemon:', error);

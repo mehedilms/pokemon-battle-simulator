@@ -23,8 +23,8 @@ const MoveSelector = ({ pokemon, onMovesSelect, selectedMoves }: MoveSelectorPro
       
       setLoading(true);
       try {
-        // Prendre plus d'attaques et inclure aussi les attaques de statut
-        const movesToFetch = pokemon.moves.slice(0, Math.min(30, pokemon.moves.length));
+        // Prendre beaucoup plus d'attaques et inclure aussi les attaques de statut
+        const movesToFetch = pokemon.moves.slice(0, Math.min(60, pokemon.moves.length));
         const movePromises = movesToFetch.map(moveData => 
           fetchMoveDetails(moveData.move.url)
         );
