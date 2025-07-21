@@ -24,8 +24,8 @@ const PokemonSelector = ({ onPokemonSelect, side }: PokemonSelectorProps) => {
     const loadPokemon = async () => {
       setLoading(true);
       try {
-        // Fetch all 898 Pokémon (as of Gen 8)
-        const results = await fetchPokemonList(898, 0);
+        // Fetch all 1010 Pokémon (as of Gen 9)
+        const results = await fetchPokemonList(1010, 0);
         setPokemonList(results);
         setFilteredList(results.slice(0, itemsPerPage));
       } catch (error) {
