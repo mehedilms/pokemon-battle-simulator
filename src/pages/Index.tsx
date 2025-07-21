@@ -17,7 +17,7 @@ const Index = () => {
   const [battleStarted, setBattleStarted] = useState(false);
   const [step, setStep] = useState<'select' | 'moves' | 'battle'>('select');
 
-  const handlePokemonSelected = () => {
+  const handleProceedToMoves = () => {
     if (playerPokemon && computerPokemon) {
       setStep('moves');
     }
@@ -61,10 +61,7 @@ const Index = () => {
               <h2 className="mb-4 text-center bg-pixels-primary py-2 rounded-md border border-transparent">
                 <PixelText className="text-white">{t('player.pokemon')}</PixelText>
               </h2>
-              <PokemonSelector onPokemonSelect={(pokemon) => {
-                setPlayerPokemon(pokemon);
-                handlePokemonSelected();
-              }} side="player" />
+              <PokemonSelector onPokemonSelect={setPlayerPokemon} side="player" />
               
               {playerPokemon && (
                 <div className="mt-4 pokemon-card">
@@ -116,10 +113,7 @@ const Index = () => {
               <h2 className="mb-4 text-center bg-pixels-primary py-2 rounded-md border border-transparent">
                 <PixelText className="text-white">{t('opponent.pokemon')}</PixelText>
               </h2>
-              <PokemonSelector onPokemonSelect={(pokemon) => {
-                setComputerPokemon(pokemon);
-                handlePokemonSelected();
-              }} side="computer" />
+              <PokemonSelector onPokemonSelect={setComputerPokemon} side="computer" />
               
               {computerPokemon && (
                 <div className="mt-4 pokemon-card">
@@ -169,12 +163,12 @@ const Index = () => {
             
             <div className="col-span-2 text-center mt-8">
               <Button 
-                onClick={handleStartBattle}
+                onClick={handleProceedToMoves}
                 disabled={!playerPokemon || !computerPokemon}
                 variant="pokemon"
                 className="px-8 py-6 disabled:opacity-50 disabled:pointer-events-none"
               >
-                <PixelText>{t('battle.start')}</PixelText>
+                <PixelText>Choisir les attaques</PixelText>
               </Button>
             </div>
           </div>
