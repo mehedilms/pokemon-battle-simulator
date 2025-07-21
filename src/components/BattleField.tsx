@@ -23,12 +23,16 @@ import jsPDF from 'jspdf';
 interface BattleFieldProps {
   playerPokemon: Pokemon | null;
   computerPokemon: Pokemon | null;
+  playerMoves: Move[];
+  computerMoves: Move[];
   onReset: () => void;
 }
 
 const BattleField: React.FC<BattleFieldProps> = ({ 
-  playerPokemon, 
-  computerPokemon, 
+  playerPokemon,
+  computerPokemon,
+  playerMoves,
+  computerMoves,
   onReset 
 }) => {
   const { toast } = useToast();
@@ -70,27 +74,16 @@ const BattleField: React.FC<BattleFieldProps> = ({
     const playerMaxHP = playerPokemon.stats.find(s => s.stat.name === 'hp')?.base_stat || 100;
     const computerMaxHP = computerPokemon.stats.find(s => s.stat.name === 'hp')?.base_stat || 100;
     
-    const playerMovesList = getRandomMoves(playerPokemon, 4);
-    const playerMoves: Move[] = [];
-    
-    for (const moveData of playerMovesList) {
-      const moveDetail = await fetchMoveDetails(moveData.move.url);
-      if (moveDetail) {
-        playerMoves.push(moveDetail);
-      }
-    }
-    
-    if (playerMoves.length === 0) {
-      playerMoves.push({
-        id: 1,
-        name: "tackle",
-        accuracy: 100,
-        power: 40,
-        pp: 35,
-        type: { name: "normal" },
-        damage_class: { name: "physical" }
-      });
-    }
+    // Utiliser les moves sélectionnées ou des moves par défaut
+    const movesToUse = playerMoves.length > 0 ? playerMoves : [{
+      id: 1,
+      name: "tackle",
+      accuracy: 100,
+      power: 40,
+      pp: 35,
+      type: { name: "normal" },
+      damage_class: { name: "physical" }
+    }];
     
     const initialState = {
       ...battleState,
@@ -98,7 +91,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       computerHP: computerMaxHP,
       playerMaxHP,
       computerMaxHP,
-      playerMoves,
+      playerMoves: movesToUse,
       battleStarted: true,
       message: t('battle.wildAppears').replace('{pokemon}', formatPokemonName(computerPokemon.name))
     };
@@ -223,11 +216,19 @@ const BattleField: React.FC<BattleFieldProps> = ({
     setBattleState(computerTurnState);
     setBattleHistory(prev => [...prev, computerTurnState]);
     
-    const computerMovesList = getRandomMoves(computerPokemon!, 1);
+    // Utiliser les moves sélectionnées de l'ordinateur ou une move aléatoire
     let computerMove: Move | null = null;
     
-    if (computerMovesList.length > 0) {
-      computerMove = await fetchMoveDetails(computerMovesList[0].move.url);
+    if (computerMoves.length > 0) {
+      // Choisir une move aléatoire parmi celles sélectionnées
+      const randomIndex = Math.floor(Math.random() * computerMoves.length);
+      computerMove = computerMoves[randomIndex];
+    } else {
+      // Fallback sur une move aléatoire du Pokémon
+      const computerMovesList = getRandomMoves(computerPokemon!, 1);
+      if (computerMovesList.length > 0) {
+        computerMove = await fetchMoveDetails(computerMovesList[0].move.url);
+      }
     }
     
     if (!computerMove) {

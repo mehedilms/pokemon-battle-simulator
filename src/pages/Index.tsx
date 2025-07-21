@@ -1,7 +1,8 @@
 
 import { useState } from 'react';
-import { Pokemon } from '../types/pokemon';
+import { Pokemon, Move } from '../types/pokemon';
 import PokemonSelector from '../components/PokemonSelector';
+import MoveSelector from '../components/MoveSelector';
 import BattleField from '../components/BattleField';
 import { Button } from '@/components/ui/button';
 import PixelText from '../components/PixelText';
@@ -11,11 +12,19 @@ const Index = () => {
   const { t } = useLanguage();
   const [playerPokemon, setPlayerPokemon] = useState<Pokemon | null>(null);
   const [computerPokemon, setComputerPokemon] = useState<Pokemon | null>(null);
+  const [playerMoves, setPlayerMoves] = useState<Move[]>([]);
+  const [computerMoves, setComputerMoves] = useState<Move[]>([]);
   const [battleStarted, setBattleStarted] = useState(false);
-  const [step, setStep] = useState<'select' | 'battle'>('select');
+  const [step, setStep] = useState<'select' | 'moves' | 'battle'>('select');
+
+  const handlePokemonSelected = () => {
+    if (playerPokemon && computerPokemon) {
+      setStep('moves');
+    }
+  };
 
   const handleStartBattle = () => {
-    if (playerPokemon && computerPokemon) {
+    if (playerPokemon && computerPokemon && playerMoves.length > 0 && computerMoves.length > 0) {
       setBattleStarted(true);
       setStep('battle');
     }
@@ -24,7 +33,13 @@ const Index = () => {
   const handleReset = () => {
     setPlayerPokemon(null);
     setComputerPokemon(null);
+    setPlayerMoves([]);
+    setComputerMoves([]);
     setBattleStarted(false);
+    setStep('select');
+  };
+
+  const handleBackToSelection = () => {
     setStep('select');
   };
 
@@ -46,7 +61,10 @@ const Index = () => {
               <h2 className="mb-4 text-center bg-pixels-primary py-2 rounded-md border border-transparent">
                 <PixelText className="text-white">{t('player.pokemon')}</PixelText>
               </h2>
-              <PokemonSelector onPokemonSelect={setPlayerPokemon} side="player" />
+              <PokemonSelector onPokemonSelect={(pokemon) => {
+                setPlayerPokemon(pokemon);
+                handlePokemonSelected();
+              }} side="player" />
               
               {playerPokemon && (
                 <div className="mt-4 pokemon-card">
@@ -98,7 +116,10 @@ const Index = () => {
               <h2 className="mb-4 text-center bg-pixels-primary py-2 rounded-md border border-transparent">
                 <PixelText className="text-white">{t('opponent.pokemon')}</PixelText>
               </h2>
-              <PokemonSelector onPokemonSelect={setComputerPokemon} side="computer" />
+              <PokemonSelector onPokemonSelect={(pokemon) => {
+                setComputerPokemon(pokemon);
+                handlePokemonSelected();
+              }} side="computer" />
               
               {computerPokemon && (
                 <div className="mt-4 pokemon-card">
@@ -157,10 +178,70 @@ const Index = () => {
               </Button>
             </div>
           </div>
+        ) : step === 'moves' ? (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="mb-4">
+                <PixelText className="text-2xl">{t('moves.selection')}</PixelText>
+              </h2>
+              <p className="text-pixels-dark mb-6">
+                <PixelText>Sélectionnez 4 attaques pour chaque Pokémon</PixelText>
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <h3 className="text-center bg-pixels-primary py-2 rounded-md">
+                  <PixelText className="text-white">{playerPokemon?.name} - Attaques</PixelText>
+                </h3>
+                {playerPokemon && (
+                  <MoveSelector
+                    pokemon={playerPokemon}
+                    selectedMoves={playerMoves}
+                    onMovesSelect={setPlayerMoves}
+                  />
+                )}
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-center bg-pixels-primary py-2 rounded-md">
+                  <PixelText className="text-white">{computerPokemon?.name} - Attaques</PixelText>
+                </h3>
+                {computerPokemon && (
+                  <MoveSelector
+                    pokemon={computerPokemon}
+                    selectedMoves={computerMoves}
+                    onMovesSelect={setComputerMoves}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-4 mt-8">
+              <Button 
+                onClick={handleBackToSelection}
+                variant="outline"
+                className="px-6 py-4"
+              >
+                <PixelText>Retour</PixelText>
+              </Button>
+              
+              <Button 
+                onClick={handleStartBattle}
+                disabled={playerMoves.length === 0 || computerMoves.length === 0}
+                variant="pokemon"
+                className="px-8 py-4 disabled:opacity-50 disabled:pointer-events-none"
+              >
+                <PixelText>Commencer le combat</PixelText>
+              </Button>
+            </div>
+          </div>
         ) : (
           <BattleField 
             playerPokemon={playerPokemon} 
-            computerPokemon={computerPokemon} 
+            computerPokemon={computerPokemon}
+            playerMoves={playerMoves}
+            computerMoves={computerMoves}
             onReset={handleReset}
           />
         )}
