@@ -164,7 +164,8 @@ const BattleField: React.FC<BattleFieldProps> = ({
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    const newComputerHP = Math.max(0, battleState.computerHP - damage);
+    // Utiliser attackingState au lieu de battleState pour avoir la valeur correcte
+    const newComputerHP = Math.max(0, attackingState.computerHP - damage);
     const message = generateRandomMessage(
       formatPokemonName(playerPokemon?.name || ''),
       formatPokemonName(computerPokemon?.name || ''),
@@ -174,7 +175,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
     );
     
     const damageState: BattleState = {
-      ...battleState,
+      ...attackingState,
       computerHP: newComputerHP,
       playerAttacking: false,
       message,
@@ -206,8 +207,11 @@ const BattleField: React.FC<BattleFieldProps> = ({
   const computerAttack = async () => {
     if (!battleState.battleStarted || battleState.battleEnded) return;
     
+    // Utiliser l'état actuel de battleState pour s'assurer d'avoir les valeurs correctes
+    const currentState = battleState;
+    
     const computerTurnState: BattleState = {
-      ...battleState,
+      ...currentState,
       turn: 'computer',
       computerAttacking: true
     };
@@ -255,7 +259,8 @@ const BattleField: React.FC<BattleFieldProps> = ({
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    const newPlayerHP = Math.max(0, battleState.playerHP - damage);
+    // Utiliser computerTurnState au lieu de battleState pour avoir la valeur correcte
+    const newPlayerHP = Math.max(0, computerTurnState.playerHP - damage);
     const message = generateRandomMessage(
       formatPokemonName(computerPokemon?.name || ''),
       formatPokemonName(playerPokemon?.name || ''),
@@ -265,7 +270,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
     );
     
     const computerDamageState: BattleState = {
-      ...battleState,
+      ...computerTurnState,
       playerHP: newPlayerHP,
       computerAttacking: false,
       message,
