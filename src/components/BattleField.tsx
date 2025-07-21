@@ -201,14 +201,18 @@ const BattleField: React.FC<BattleFieldProps> = ({
     
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    computerAttack();
+    // Passer l'état mis à jour à computerAttack pour éviter la régénération
+    computerAttack(damageState);
   };
   
-  const computerAttack = async () => {
-    if (!battleState.battleStarted || battleState.battleEnded) return;
+  const computerAttack = async (currentBattleState?: BattleState) => {
+    // Utiliser l'état passé en paramètre ou l'état actuel
+    const stateToUse = currentBattleState || battleState;
+    
+    if (!stateToUse.battleStarted || stateToUse.battleEnded) return;
     
     // Utiliser l'état actuel de battleState pour s'assurer d'avoir les valeurs correctes
-    const currentState = battleState;
+    const currentState = stateToUse;
     
     const computerTurnState: BattleState = {
       ...currentState,
