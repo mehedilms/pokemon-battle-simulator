@@ -105,6 +105,9 @@
   .font-pixel {
     font-family: 'Kemco Pixel', monospace;
     font-size: 1.25rem;
+  }
+}
+
 @keyframes fadeOut {
   0% { opacity: 1; transform: translateY(-20px); }
   100% { opacity: 0; transform: translateY(-40px); }
