@@ -7,6 +7,8 @@ import BattleField from '../components/BattleField';
 import { Button } from '@/components/ui/button';
 import PixelText from '../components/PixelText';
 import { useLanguage } from '../contexts/LanguageContext';
+import ThemeToggle from '../components/ThemeToggle';
+import LanguageSwitchButton from '../components/LanguageSwitchButton';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -44,13 +46,22 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white py-8 px-4">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 py-8 px-4">
       <div className="max-w-6xl mx-auto">
+        {/* Header avec les contrôles */}
+        <div className="flex justify-between items-center mb-4">
+          <div></div>
+          <div className="flex gap-2">
+            <LanguageSwitchButton />
+            <ThemeToggle />
+          </div>
+        </div>
+        
         <div className="text-center mb-8 animate-fade-in">
-          <h1 className="mb-4 pb-2 border-b-2 border-pixels-border shadow-pixels inline-block px-4 py-2 bg-white rounded-md">
-            <PixelText className="text-xl">{t('app.title')}</PixelText>
+          <h1 className="mb-4 pb-2 border-b-2 border-pixels-border shadow-pixels inline-block px-4 py-2 bg-white dark:bg-gray-800 rounded-md transition-colors duration-300">
+            <PixelText className="text-xl text-foreground">{t('app.title')}</PixelText>
           </h1>
-          <p className="text-pixels-dark max-w-2xl mx-auto bg-white border border-pixels-border p-3 rounded-md shadow-pixels">
+          <p className="text-pixels-dark dark:text-gray-300 max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-pixels-border p-3 rounded-md shadow-pixels transition-colors duration-300">
             <PixelText as="span">{t('app.description')}</PixelText>
           </p>
         </div>

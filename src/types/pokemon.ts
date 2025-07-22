@@ -69,4 +69,16 @@ export interface BattleState {
   spectatorMode: boolean;
   currentAttack: Move | null;
   backgroundImage: string;
+  playerStatus: import('./battleStatus').BattleStatus | null;
+  computerStatus: import('./battleStatus').BattleStatus | null;
+  playerStatModifications: import('./battleStatus').StatModification;
+  computerStatModifications: import('./battleStatus').StatModification;
+  damageIndicators: Array<{
+    id: string;
+    damage: number;
+    isCritical: boolean;
+    effectiveness: number;
+    position: { x: number; y: number };
+    target: 'player' | 'computer';
+  }>;
 }
