@@ -10,6 +10,7 @@ import {
   tryInflictStatus
 } from '../services/pokemonService';
 import { applyStatusEffect, shouldRemoveStatus } from '../utils/battleStatus';
+import { getRandomItems, useItem } from '../services/itemService';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
@@ -19,6 +20,7 @@ import AttackAnimation from './AttackAnimation';
 import PixelText from './PixelText';
 import BattleStatusIndicator from './BattleStatusIndicator';
 import DamageIndicator from './DamageIndicator';
+import ItemSelector from './ItemSelector';
 import { useLanguage } from '../contexts/LanguageContext';
 import { RefreshCcw, FileDown } from 'lucide-react';
 import html2canvas from 'html2canvas';
@@ -68,7 +70,22 @@ const BattleField: React.FC<BattleFieldProps> = ({
     computerStatus: [],
     lastDamage: 0,
     lastEffectiveness: 1,
-    criticalHit: false
+    criticalHit: false,
+    playerItems: [],
+    playerStatBoosts: {
+      attack: 0,
+      defense: 0,
+      'special-attack': 0,
+      'special-defense': 0,
+      speed: 0,
+    },
+    computerStatBoosts: {
+      attack: 0,
+      defense: 0,
+      'special-attack': 0,
+      'special-defense': 0,
+      speed: 0,
+    },
   });
 
   useEffect(() => {
@@ -101,6 +118,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       playerMaxHP,
       computerMaxHP,
       playerMoves: movesToUse,
+      playerItems: getRandomItems(5),
       battleStarted: true,
       message: t('battle.wildAppears').replace('{pokemon}', formatPokemonName(computerPokemon.name))
     };
@@ -214,6 +232,44 @@ const BattleField: React.FC<BattleFieldProps> = ({
     computerAttack(damageState);
   };
   
+  const handleItemUse = async (item: any) => {
+    if (battleState.turn === 'computer' || battleState.battleEnded) return;
+    
+    const itemResult = useItem(
+      item,
+      battleState.playerHP,
+      battleState.playerMaxHP,
+      battleState.playerStatus,
+      battleState.playerStatBoosts
+    );
+    
+    // Remove the used item from player inventory
+    const updatedItems = battleState.playerItems.filter(i => i.id !== item.id);
+    
+    const itemState: BattleState = {
+      ...battleState,
+      playerHP: itemResult.newHP,
+      playerStatus: itemResult.newStatus,
+      playerStatBoosts: itemResult.newStatBoosts,
+      playerItems: updatedItems,
+      message: itemResult.message,
+      turn: 'player'
+    };
+    
+    setBattleState(itemState);
+    setBattleHistory(prev => [...prev, itemState]);
+    
+    toast({
+      title: language === 'fr' ? "Objet utilisé" : "Item used",
+      description: itemResult.message,
+    });
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Pass the turn to computer
+    computerAttack(itemState);
+  };
+
   const computerAttack = async (currentBattleState?: BattleState) => {
     // Utiliser l'état passé en paramètre ou l'état actuel
     const stateToUse = currentBattleState || battleState;
@@ -791,6 +847,21 @@ const BattleField: React.FC<BattleFieldProps> = ({
         </div>
         
         <div className="game-boy-menu border-2 border-black p-2 rounded bg-white">
+          <ItemSelector
+            items={battleState.playerItems}
+            onItemUse={handleItemUse}
+            playerHP={battleState.playerHP}
+            playerMaxHP={battleState.playerMaxHP}
+            playerStatus={battleState.playerStatus}
+            disabled={battleState.turn === 'computer' || 
+                     battleState.battleEnded || 
+                     battleState.spectatorMode}
+          />
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="game-boy-menu border-2 border-black p-2 rounded bg-white">
           <div className="grid grid-cols-2 gap-2 h-full">
             <Button
               className="game-boy-button bg-red-500 text-white border border-black h-10 relative overflow-hidden font-kemco"
@@ -829,6 +900,35 @@ const BattleField: React.FC<BattleFieldProps> = ({
                 <PixelText as="span">{t('battle.run')}</PixelText>
               </span>
             </Button>
+          </div>
+        </div>
+        
+        <div className="game-boy-menu border-2 border-black p-2 rounded bg-white">
+          <div className="space-y-2">
+            <div>
+              <h4 className="font-pixel text-sm mb-1">{formatPokemonName(playerPokemon.name)} Status:</h4>
+              <BattleStatusIndicator statuses={battleState.playerStatus} />
+            </div>
+            <div>
+              <h4 className="font-pixel text-sm mb-1">{formatPokemonName(computerPokemon.name)} Status:</h4>
+              <BattleStatusIndicator statuses={battleState.computerStatus} />
+            </div>
+            
+            {/* Affichage des augmentations de stats */}
+            {Object.entries(battleState.playerStatBoosts).some(([_, boost]) => boost !== 0) && (
+              <div>
+                <h4 className="font-pixel text-xs mb-1">Boosts {formatPokemonName(playerPokemon.name)}:</h4>
+                <div className="flex flex-wrap gap-1">
+                  {Object.entries(battleState.playerStatBoosts)
+                    .filter(([_, boost]) => boost !== 0)
+                    .map(([stat, boost]) => (
+                      <span key={stat} className={`text-xs px-1 rounded ${boost > 0 ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
+                        {stat}: {boost > 0 ? '+' : ''}{boost}
+                      </span>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -74,4 +74,19 @@ export interface BattleState {
   lastDamage: number;
   lastEffectiveness: number;
   criticalHit: boolean;
+  playerItems: import('./item').BattleItem[];
+  playerStatBoosts: {
+    attack: number;
+    defense: number;
+    'special-attack': number;
+    'special-defense': number;
+    speed: number;
+  };
+  computerStatBoosts: {
+    attack: number;
+    defense: number;
+    'special-attack': number;
+    'special-defense': number;
+    speed: number;
+  };
 }
