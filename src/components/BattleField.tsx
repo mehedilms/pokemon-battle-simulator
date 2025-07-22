@@ -190,13 +190,24 @@ const BattleField: React.FC<BattleFieldProps> = ({
       message += ` ${effectivenessMessage}`;
     }
     
+    // Ajouter l'indicateur de dégâts flottant
+    const damageIndicator = {
+      id: `${Date.now()}`,
+      damage,
+      isCritical,
+      effectiveness,
+      position: { x: 400, y: 200 },
+      target: 'computer' as const
+    };
+
     const damageState: BattleState = {
       ...attackingState,
       computerHP: newComputerHP,
       playerAttacking: false,
       message,
       currentAttack: null,
-      turn: null
+      turn: null,
+      damageIndicators: [...attackingState.damageIndicators, damageIndicator]
     };
     
     setBattleState(damageState);
@@ -304,13 +315,24 @@ const BattleField: React.FC<BattleFieldProps> = ({
       message += ` ${effectivenessMessage}`;
     }
     
+    // Ajouter l'indicateur de dégâts flottant pour le joueur
+    const playerDamageIndicator = {
+      id: `${Date.now()}`,
+      damage,
+      isCritical,
+      effectiveness,
+      position: { x: 200, y: 200 },
+      target: 'player' as const
+    };
+
     const computerDamageState: BattleState = {
       ...computerTurnState,
       playerHP: newPlayerHP,
       computerAttacking: false,
       message,
       turn: null,
-      currentAttack: null
+      currentAttack: null,
+      damageIndicators: [...computerTurnState.damageIndicators, playerDamageIndicator]
     };
     
     setBattleState(computerDamageState);
