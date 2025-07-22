@@ -17,6 +17,8 @@ import { Label } from '@/components/ui/label';
 import { getRandomBackground, getTypeBasedBackground } from '../data/backgrounds';
 import AttackAnimation from './AttackAnimation';
 import PixelText from './PixelText';
+import BattleStatusIndicator from './BattleStatusIndicator';
+import DamageIndicator from './DamageIndicator';
 import { useLanguage } from '../contexts/LanguageContext';
 import { RefreshCcw, FileDown } from 'lucide-react';
 import html2canvas from 'html2canvas';
@@ -158,6 +160,12 @@ const BattleField: React.FC<BattleFieldProps> = ({
       move
     );
     
+    // Try to inflict status condition
+    const newStatus = tryInflictStatus(move, attackingState.computerStatus);
+    const updatedComputerStatus = newStatus 
+      ? [...attackingState.computerStatus, newStatus]
+      : attackingState.computerStatus;
+    
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Utiliser attackingState au lieu de battleState pour avoir la valeur correcte
@@ -174,10 +182,14 @@ const BattleField: React.FC<BattleFieldProps> = ({
     const damageState: BattleState = {
       ...attackingState,
       computerHP: newComputerHP,
+      computerStatus: updatedComputerStatus,
       playerAttacking: false,
       message,
       currentAttack: null,
-      turn: null
+      turn: null,
+      lastDamage: damageResult.damage,
+      lastEffectiveness: damageResult.effectiveness,
+      criticalHit: damageResult.isCritical
     };
     
     setBattleState(damageState);
