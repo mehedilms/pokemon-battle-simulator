@@ -1,4 +1,7 @@
 import { Pokemon, Move } from '../types/pokemon';
+import { getTypeEffectiveness, getEffectivenessMessage } from '../utils/typeEffectiveness';
+import { getStatusInflictionChance, createBattleStatus } from '../utils/battleStatus';
+import { BattleStatus, BattleStatusType } from '../types/battleStatus';
 
 const API_URL = 'https://pokeapi.co/api/v2';
 
@@ -82,8 +85,8 @@ export const calculateDamage = (
   attacker: Pokemon, 
   defender: Pokemon, 
   move: Move
-): number => {
-  if (!move.power) return 10; // Default damage for status moves
+): { damage: number; effectiveness: number; isCritical: boolean } => {
+  if (!move.power) return { damage: 10, effectiveness: 1, isCritical: false }; // Default damage for status moves
   
   // Get attacker's attack stat (use special attack if move is special)
   const attackStat = move.damage_class.name === 'special' 
@@ -95,23 +98,38 @@ export const calculateDamage = (
     ? defender.stats.find(s => s.stat.name === 'special-defense')?.base_stat || 50
     : defender.stats.find(s => s.stat.name === 'defense')?.base_stat || 50;
   
+  // Calculate critical hit chance based on speed stat
+  const speedStat = attacker.stats.find(s => s.stat.name === 'speed')?.base_stat || 50;
+  const criticalChance = Math.min(0.25, speedStat / 512); // Max 25% chance
+  const isCritical = Math.random() < criticalChance;
+  
   // Simple damage formula (similar to Pokémon games but simplified)
-  let damage = ((2 * 50 / 5 + 2) * move.power * (attackStat / defenseStat)) / 50 + 2;
+  const level = 50; // Assume all Pokémon are level 50
+  let damage = ((2 * level / 5 + 2) * move.power * (attackStat / defenseStat)) / 50 + 2;
+  
+  // Critical hit multiplier
+  if (isCritical) {
+    damage *= 1.5;
+  }
   
   // Random factor (85-100%)
   damage *= (85 + Math.random() * 15) / 100;
   
-  // Type effectiveness (simplified)
+  // Type effectiveness
   const moveType = move.type.name;
   const defenderTypes = defender.types.map(t => t.type.name);
-  
-  // Very simplified type effectiveness
-  const typeEffectiveness = 1.0; // In a real game, we would calculate this based on type matchups
+  const typeEffectiveness = getTypeEffectiveness(moveType, defenderTypes);
   
   damage *= typeEffectiveness;
   
   // Cap damage to ensure battles last a reasonable time
-  return Math.max(1, Math.min(Math.floor(damage), 100));
+  const finalDamage = Math.max(1, Math.min(Math.floor(damage), 150));
+  
+  return { 
+    damage: finalDamage, 
+    effectiveness: typeEffectiveness, 
+    isCritical 
+  };
 };
 
 export const formatPokemonName = (name: string): string => {
@@ -130,6 +148,7 @@ export const generateRandomMessage = (
   defender: string, 
   moveName: string, 
   damage: number, 
+  effectiveness: number,
   isCritical = false
 ): string => {
   const messages = [
@@ -138,18 +157,42 @@ export const generateRandomMessage = (
     `${attacker} attaque avec ${moveName}!`
   ];
   
-  const damageMessages = [
-    `C'est super efficace! ${defender} perd ${damage} PV!`,
-    `${defender} perd ${damage} PV!`,
-    `${defender} est touché et perd ${damage} PV!`
-  ];
+  let damageMessage = `${defender} perd ${damage} PV!`;
+  
+  // Add effectiveness message
+  const effectivenessMsg = getEffectivenessMessage(effectiveness, 'fr');
+  if (effectivenessMsg) {
+    damageMessage = `${effectivenessMsg} ${damageMessage}`;
+  }
   
   const criticalMessage = "Coup critique!";
   
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-  const randomDamageMessage = damageMessages[Math.floor(Math.random() * damageMessages.length)];
   
-  return isCritical 
-    ? `${randomMessage} ${criticalMessage} ${randomDamageMessage}`
-    : `${randomMessage} ${randomDamageMessage}`;
+  let finalMessage = `${randomMessage} ${damageMessage}`;
+  if (isCritical) {
+    finalMessage = `${randomMessage} ${criticalMessage} ${damageMessage}`;
+  }
+  
+  return finalMessage;
+};
+
+/**
+ * Check if a move can inflict a status condition and apply it
+ */
+export const tryInflictStatus = (move: Move, targetStatuses: BattleStatus[]): BattleStatus | null => {
+  const statusChance = getStatusInflictionChance(move.name);
+  
+  if (!statusChance) return null;
+  
+  // Check if target already has this status
+  const hasStatus = targetStatuses.some(status => status.type === statusChance.status);
+  if (hasStatus) return null;
+  
+  // Roll for status infliction
+  if (Math.random() < statusChance.chance) {
+    return createBattleStatus(statusChance.status);
+  }
+  
+  return null;
 };

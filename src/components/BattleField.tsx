@@ -6,8 +6,10 @@ import {
   getRandomMoves, 
   calculateDamage, 
   formatPokemonName,
-  generateRandomMessage
+  generateRandomMessage,
+  tryInflictStatus
 } from '../services/pokemonService';
+import { applyStatusEffect, shouldRemoveStatus } from '../utils/battleStatus';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
@@ -59,7 +61,12 @@ const BattleField: React.FC<BattleFieldProps> = ({
     winner: null,
     spectatorMode: false,
     currentAttack: null,
-    backgroundImage: getRandomBackground()
+    backgroundImage: getRandomBackground(),
+    playerStatus: [],
+    computerStatus: [],
+    lastDamage: 0,
+    lastEffectiveness: 1,
+    criticalHit: false
   });
 
   useEffect(() => {
@@ -145,26 +152,23 @@ const BattleField: React.FC<BattleFieldProps> = ({
     setBattleState(attackingState);
     setBattleHistory(prev => [...prev, attackingState]);
     
-    const isCritical = Math.random() < 0.1;
-    let damage = calculateDamage(
+    const damageResult = calculateDamage(
       playerPokemon!,
       computerPokemon!,
       move
     );
     
-    if (isCritical) damage *= 1.5;
-    damage = Math.floor(damage);
-    
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Utiliser attackingState au lieu de battleState pour avoir la valeur correcte
-    const newComputerHP = Math.max(0, attackingState.computerHP - damage);
+    const newComputerHP = Math.max(0, attackingState.computerHP - damageResult.damage);
     const message = generateRandomMessage(
       formatPokemonName(playerPokemon?.name || ''),
       formatPokemonName(computerPokemon?.name || ''),
       formatMoveName(move.name),
-      damage,
-      isCritical
+      damageResult.damage,
+      damageResult.effectiveness,
+      damageResult.isCritical
     );
     
     const damageState: BattleState = {
@@ -252,26 +256,23 @@ const BattleField: React.FC<BattleFieldProps> = ({
     setBattleState(computerAttackState);
     setBattleHistory(prev => [...prev, computerAttackState]);
     
-    const isCritical = Math.random() < 0.1;
-    let damage = calculateDamage(
+    const damageResult = calculateDamage(
       computerPokemon!,
       playerPokemon!,
       computerMove
     );
     
-    if (isCritical) damage *= 1.5;
-    damage = Math.floor(damage);
-    
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Utiliser computerTurnState au lieu de battleState pour avoir la valeur correcte
-    const newPlayerHP = Math.max(0, computerTurnState.playerHP - damage);
+    const newPlayerHP = Math.max(0, computerTurnState.playerHP - damageResult.damage);
     const message = generateRandomMessage(
       formatPokemonName(computerPokemon?.name || ''),
       formatPokemonName(playerPokemon?.name || ''),
       formatMoveName(computerMove.name),
-      damage,
-      isCritical
+      damageResult.damage,
+      damageResult.effectiveness,
+      damageResult.isCritical
     );
     
     const computerDamageState: BattleState = {
@@ -422,16 +423,16 @@ const BattleField: React.FC<BattleFieldProps> = ({
         pdf.setTextColor(0, 0, 0);
         pdf.setFont("helvetica", "normal");
         
-        const damage = calculateDamage(
+        const damageResult = calculateDamage(
           state.turn === 'player' ? playerPokemon! : computerPokemon!,
           state.turn === 'player' ? computerPokemon! : playerPokemon!,
           state.currentAttack
         );
         
         const maxHP = state.turn === 'player' ? state.computerMaxHP : state.playerMaxHP;
-        const damagePercent = ((damage / maxHP) * 100).toFixed(1);
+        const damagePercent = ((damageResult.damage / maxHP) * 100).toFixed(1);
         
-        pdf.text(`${language === 'fr' ? "Dégâts" : "Damage"}: ${damage} (${damagePercent}%)`, 20, yPosition);
+        pdf.text(`${language === 'fr' ? "Dégâts" : "Damage"}: ${damageResult.damage} (${damagePercent}%)`, 20, yPosition);
         yPosition += 5;
         
         pdf.text(`${language === 'fr' ? "Puissance" : "Power"}: ${power}`, 20, yPosition);
