@@ -6,11 +6,8 @@ import {
   getRandomMoves, 
   calculateDamage, 
   formatPokemonName,
-  generateRandomMessage,
-  calculateCriticalHit,
-  generateStatusEffect
+  generateRandomMessage
 } from '../services/pokemonService';
-import { getEffectivenessText } from '../utils/typeEffectiveness';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
@@ -22,9 +19,6 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { RefreshCcw, FileDown } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { createDefaultStatModifications } from '../types/battleStatus';
-import AnimatedHealthBar from './AnimatedHealthBar';
-import DamageIndicator from './DamageIndicator';
 
 interface BattleFieldProps {
   playerPokemon: Pokemon | null;
@@ -65,12 +59,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
     winner: null,
     spectatorMode: false,
     currentAttack: null,
-    backgroundImage: getRandomBackground(),
-    playerStatus: null,
-    computerStatus: null,
-    playerStatModifications: createDefaultStatModifications(),
-    computerStatModifications: createDefaultStatModifications(),
-    damageIndicators: []
+    backgroundImage: getRandomBackground()
   });
 
   useEffect(() => {
@@ -96,7 +85,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       damage_class: { name: "physical" }
     }];
     
-    const initialState: BattleState = {
+    const initialState = {
       ...battleState,
       playerHP: playerMaxHP,
       computerHP: computerMaxHP,
@@ -104,12 +93,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       computerMaxHP,
       playerMoves: movesToUse,
       battleStarted: true,
-      message: t('battle.wildAppears').replace('{pokemon}', formatPokemonName(computerPokemon.name)),
-      playerStatus: null,
-      computerStatus: null,
-      playerStatModifications: createDefaultStatModifications(),
-      computerStatModifications: createDefaultStatModifications(),
-      damageIndicators: []
+      message: t('battle.wildAppears').replace('{pokemon}', formatPokemonName(computerPokemon.name))
     };
     
     setBattleState(initialState);
@@ -161,22 +145,21 @@ const BattleField: React.FC<BattleFieldProps> = ({
     setBattleState(attackingState);
     setBattleHistory(prev => [...prev, attackingState]);
     
-    const isCritical = calculateCriticalHit(playerPokemon!);
-    const damageResult = calculateDamage(
+    const isCritical = Math.random() < 0.1;
+    let damage = calculateDamage(
       playerPokemon!,
       computerPokemon!,
-      move,
-      isCritical
+      move
     );
     
-    const damage = damageResult.damage;
-    const effectiveness = damageResult.effectiveness;
+    if (isCritical) damage *= 1.5;
+    damage = Math.floor(damage);
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Utiliser attackingState au lieu de battleState pour avoir la valeur correcte
     const newComputerHP = Math.max(0, attackingState.computerHP - damage);
-    let message = generateRandomMessage(
+    const message = generateRandomMessage(
       formatPokemonName(playerPokemon?.name || ''),
       formatPokemonName(computerPokemon?.name || ''),
       formatMoveName(move.name),
@@ -184,30 +167,13 @@ const BattleField: React.FC<BattleFieldProps> = ({
       isCritical
     );
     
-    // Ajouter le message d'efficacité
-    const effectivenessMessage = getEffectivenessText(effectiveness, language);
-    if (effectivenessMessage) {
-      message += ` ${effectivenessMessage}`;
-    }
-    
-    // Ajouter l'indicateur de dégâts flottant
-    const damageIndicator = {
-      id: `${Date.now()}`,
-      damage,
-      isCritical,
-      effectiveness,
-      position: { x: 400, y: 200 },
-      target: 'computer' as const
-    };
-
     const damageState: BattleState = {
       ...attackingState,
       computerHP: newComputerHP,
       playerAttacking: false,
       message,
       currentAttack: null,
-      turn: null,
-      damageIndicators: [...attackingState.damageIndicators, damageIndicator]
+      turn: null
     };
     
     setBattleState(damageState);
@@ -286,22 +252,21 @@ const BattleField: React.FC<BattleFieldProps> = ({
     setBattleState(computerAttackState);
     setBattleHistory(prev => [...prev, computerAttackState]);
     
-    const isCritical = calculateCriticalHit(computerPokemon!);
-    const damageResult = calculateDamage(
+    const isCritical = Math.random() < 0.1;
+    let damage = calculateDamage(
       computerPokemon!,
       playerPokemon!,
-      computerMove,
-      isCritical
+      computerMove
     );
     
-    const damage = damageResult.damage;
-    const effectiveness = damageResult.effectiveness;
+    if (isCritical) damage *= 1.5;
+    damage = Math.floor(damage);
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Utiliser computerTurnState au lieu de battleState pour avoir la valeur correcte
     const newPlayerHP = Math.max(0, computerTurnState.playerHP - damage);
-    let message = generateRandomMessage(
+    const message = generateRandomMessage(
       formatPokemonName(computerPokemon?.name || ''),
       formatPokemonName(playerPokemon?.name || ''),
       formatMoveName(computerMove.name),
@@ -309,30 +274,13 @@ const BattleField: React.FC<BattleFieldProps> = ({
       isCritical
     );
     
-    // Ajouter le message d'efficacité
-    const effectivenessMessage = getEffectivenessText(effectiveness, language);
-    if (effectivenessMessage) {
-      message += ` ${effectivenessMessage}`;
-    }
-    
-    // Ajouter l'indicateur de dégâts flottant pour le joueur
-    const playerDamageIndicator = {
-      id: `${Date.now()}`,
-      damage,
-      isCritical,
-      effectiveness,
-      position: { x: 200, y: 200 },
-      target: 'player' as const
-    };
-
     const computerDamageState: BattleState = {
       ...computerTurnState,
       playerHP: newPlayerHP,
       computerAttacking: false,
       message,
       turn: null,
-      currentAttack: null,
-      damageIndicators: [...computerTurnState.damageIndicators, playerDamageIndicator]
+      currentAttack: null
     };
     
     setBattleState(computerDamageState);
@@ -474,12 +422,11 @@ const BattleField: React.FC<BattleFieldProps> = ({
         pdf.setTextColor(0, 0, 0);
         pdf.setFont("helvetica", "normal");
         
-        const damageResult = calculateDamage(
+        const damage = calculateDamage(
           state.turn === 'player' ? playerPokemon! : computerPokemon!,
           state.turn === 'player' ? computerPokemon! : playerPokemon!,
           state.currentAttack
         );
-        const damage = damageResult.damage;
         
         const maxHP = state.turn === 'player' ? state.computerMaxHP : state.playerMaxHP;
         const damagePercent = ((damage / maxHP) * 100).toFixed(1);
@@ -694,14 +641,28 @@ const BattleField: React.FC<BattleFieldProps> = ({
         ref={battleWindowRef}
       >
         <div className="absolute top-1 left-1 z-10">
-          <AnimatedHealthBar
-            currentHP={battleState.playerHP}
-            maxHP={battleState.playerMaxHP}
-            pokemonName={formatPokemonName(playerPokemon.name)}
-            level={50}
-            status={battleState.playerStatus}
-            isPlayer={true}
-          />
+          <div className="gba-stat-card bg-white border-2 border-black p-1 rounded-lg shadow min-w-[120px]">
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center">
+                <span className="font-kemco text-xs uppercase">{formatPokemonName(playerPokemon.name)}</span>
+                <span className="font-kemco text-xs">{t('battle.level')}50</span>
+              </div>
+              <div className="flex items-center space-x-1 mt-1">
+                <span className="font-kemco text-xs">{t('battle.hp')}</span>
+                <div className="hp-bar-container w-full h-1 bg-gray-300 rounded">
+                  <div 
+                    className={`hp-bar h-full rounded ${getHPColor(battleState.playerHP, battleState.playerMaxHP)}`}
+                    style={{ width: getHPPercentage(battleState.playerHP, battleState.playerMaxHP) }}
+                  ></div>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <span className="font-kemco text-[10px]">
+                  {battleState.playerHP}/{battleState.playerMaxHP}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
         
         {computerPokemon.sprites.front_default && (
@@ -721,14 +682,28 @@ const BattleField: React.FC<BattleFieldProps> = ({
         )}
         
         <div className="absolute bottom-1 right-1 z-10">
-          <AnimatedHealthBar
-            currentHP={battleState.computerHP}
-            maxHP={battleState.computerMaxHP}
-            pokemonName={formatPokemonName(computerPokemon.name)}
-            level={50}
-            status={battleState.computerStatus}
-            isPlayer={false}
-          />
+          <div className="gba-stat-card bg-white border-2 border-black p-1 rounded-lg shadow min-w-[120px]">
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center">
+                <span className="font-kemco text-xs uppercase">{formatPokemonName(computerPokemon.name)}</span>
+                <span className="font-kemco text-xs">{t('battle.level')}50</span>
+              </div>
+              <div className="flex items-center space-x-1 mt-1">
+                <span className="font-kemco text-xs">{t('battle.hp')}</span>
+                <div className="hp-bar-container w-full h-1 bg-gray-300 rounded">
+                  <div 
+                    className={`hp-bar h-full rounded ${getHPColor(battleState.computerHP, battleState.computerMaxHP)}`}
+                    style={{ width: getHPPercentage(battleState.computerHP, battleState.computerMaxHP) }}
+                  ></div>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <span className="font-kemco text-[10px]">
+                  {battleState.computerHP}/{battleState.computerMaxHP}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
           
         {playerPokemon.sprites.back_default && (
@@ -755,23 +730,6 @@ const BattleField: React.FC<BattleFieldProps> = ({
             ? formatPokemonName(playerPokemon.name) 
             : formatPokemonName(computerPokemon.name)}
         />
-        
-        {/* Indicateurs de dégâts */}
-        {battleState.damageIndicators.map((indicator) => (
-          <DamageIndicator
-            key={indicator.id}
-            damage={indicator.damage}
-            isCritical={indicator.isCritical}
-            effectiveness={indicator.effectiveness}
-            position={indicator.position}
-            onComplete={() => {
-              setBattleState(prev => ({
-                ...prev,
-                damageIndicators: prev.damageIndicators.filter(d => d.id !== indicator.id)
-              }));
-            }}
-          />
-        ))}
       </div>
       
       <div className="flex items-center justify-center space-x-2 mb-2">

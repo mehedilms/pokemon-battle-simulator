@@ -1,6 +1,4 @@
 import { Pokemon, Move } from '../types/pokemon';
-import { calculateTypeEffectiveness, getEffectivenessText } from '../utils/typeEffectiveness';
-import { BattleStatus } from '../types/battleStatus';
 
 const API_URL = 'https://pokeapi.co/api/v2';
 
@@ -83,103 +81,37 @@ export const getRandomMoves = (pokemon: Pokemon, count = 4): { move: { name: str
 export const calculateDamage = (
   attacker: Pokemon, 
   defender: Pokemon, 
-  move: Move,
-  isCritical: boolean = false,
-  statModifications?: { attack: number; defense: number; specialAttack: number; specialDefense: number }
-): { damage: number; effectiveness: number } => {
-  if (!move.power) return { damage: 10, effectiveness: 1 }; // Default damage for status moves
+  move: Move
+): number => {
+  if (!move.power) return 10; // Default damage for status moves
   
-  // Get base stats
-  let attackStat = move.damage_class.name === 'special' 
+  // Get attacker's attack stat (use special attack if move is special)
+  const attackStat = move.damage_class.name === 'special' 
     ? attacker.stats.find(s => s.stat.name === 'special-attack')?.base_stat || 50
     : attacker.stats.find(s => s.stat.name === 'attack')?.base_stat || 50;
   
-  let defenseStat = move.damage_class.name === 'special'
+  // Get defender's defense stat
+  const defenseStat = move.damage_class.name === 'special'
     ? defender.stats.find(s => s.stat.name === 'special-defense')?.base_stat || 50
     : defender.stats.find(s => s.stat.name === 'defense')?.base_stat || 50;
   
-  // Apply stat modifications
-  if (statModifications) {
-    const attackMod = move.damage_class.name === 'special' ? statModifications.specialAttack : statModifications.attack;
-    const defenseMod = move.damage_class.name === 'special' ? statModifications.specialDefense : statModifications.defense;
-    
-    attackStat = Math.floor(attackStat * getStatMultiplier(attackMod));
-    defenseStat = Math.floor(defenseStat * getStatMultiplier(defenseMod));
-  }
-  
-  // Calculate type effectiveness
-  const moveType = move.type.name;
-  const defenderTypes = defender.types.map(t => t.type.name);
-  const effectiveness = calculateTypeEffectiveness(moveType, defenderTypes);
-  
-  // Return no damage if no effect
-  if (effectiveness === 0) {
-    return { damage: 0, effectiveness };
-  }
-  
-  // STAB (Same Type Attack Bonus)
-  const attackerTypes = attacker.types.map(t => t.type.name);
-  const stab = attackerTypes.includes(moveType) ? 1.5 : 1;
-  
-  // Critical hit multiplier
-  const criticalMultiplier = isCritical ? 1.5 : 1;
-  
-  // Calculate damage using Pokémon damage formula (simplified)
+  // Simple damage formula (similar to Pokémon games but simplified)
   let damage = ((2 * 50 / 5 + 2) * move.power * (attackStat / defenseStat)) / 50 + 2;
-  
-  // Apply modifiers
-  damage *= stab;
-  damage *= effectiveness;
-  damage *= criticalMultiplier;
   
   // Random factor (85-100%)
   damage *= (85 + Math.random() * 15) / 100;
   
+  // Type effectiveness (simplified)
+  const moveType = move.type.name;
+  const defenderTypes = defender.types.map(t => t.type.name);
+  
+  // Very simplified type effectiveness
+  const typeEffectiveness = 1.0; // In a real game, we would calculate this based on type matchups
+  
+  damage *= typeEffectiveness;
+  
   // Cap damage to ensure battles last a reasonable time
-  const finalDamage = Math.max(1, Math.min(Math.floor(damage), 120));
-  
-  return { damage: finalDamage, effectiveness };
-};
-
-// Helper function for stat stage multipliers
-const getStatMultiplier = (stages: number): number => {
-  const multipliers = [0.25, 0.28, 0.33, 0.4, 0.5, 0.66, 1, 1.5, 2, 2.5, 3, 3.5, 4];
-  const index = Math.max(0, Math.min(12, stages + 6));
-  return multipliers[index];
-};
-
-// Calculate critical hit chance
-export const calculateCriticalHit = (pokemon: Pokemon): boolean => {
-  // Base critical hit ratio is 1/24 (about 4.17%)
-  // Some moves and abilities can increase this
-  const criticalRatio = 24;
-  return Math.random() < (1 / criticalRatio);
-};
-
-// Generate status effect from certain moves
-export const generateStatusEffect = (move: Move): BattleStatus | null => {
-  const statusMoves: { [key: string]: { status: BattleStatus['type']; chance: number; turns: number } } = {
-    'thunder-wave': { status: 'paralysis', chance: 1, turns: -1 }, // Permanent until cured
-    'toxic': { status: 'poison', chance: 1, turns: -1 },
-    'will-o-wisp': { status: 'burn', chance: 1, turns: -1 },
-    'sleep-powder': { status: 'sleep', chance: 0.75, turns: 3 },
-    'confuse-ray': { status: 'confusion', chance: 1, turns: 3 },
-    'ice-beam': { status: 'freeze', chance: 0.1, turns: -1 },
-    'flamethrower': { status: 'burn', chance: 0.1, turns: -1 },
-    'thunderbolt': { status: 'paralysis', chance: 0.1, turns: -1 },
-    'sludge-bomb': { status: 'poison', chance: 0.3, turns: -1 }
-  };
-  
-  const statusInfo = statusMoves[move.name];
-  if (statusInfo && Math.random() < statusInfo.chance) {
-    return {
-      type: statusInfo.status,
-      turnsRemaining: statusInfo.turns,
-      message: `${move.name} caused a status effect!`
-    };
-  }
-  
-  return null;
+  return Math.max(1, Math.min(Math.floor(damage), 100));
 };
 
 export const formatPokemonName = (name: string): string => {
