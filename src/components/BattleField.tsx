@@ -443,7 +443,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       playerStatus: updatedPlayerStatus,
       computerAttacking: false,
       message,
-      turn: null,
+      turn: 'player',
       currentAttack: null
     };
     
