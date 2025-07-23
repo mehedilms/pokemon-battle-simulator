@@ -143,6 +143,31 @@ const BattleField: React.FC<BattleFieldProps> = ({
   const handleAttack = async (move: Move) => {
     if (battleState.turn === 'computer' || battleState.battleEnded) return;
     
+    // Check if player can act (status effects)
+    const playerStatusEffects = battleState.playerStatus.map(status => 
+      applyStatusEffect(status, battleState.playerMaxHP, language)
+    );
+    
+    const canPlayerAct = playerStatusEffects.every(effect => effect.canAct);
+    
+    if (!canPlayerAct) {
+      const statusMessage = playerStatusEffects
+        .filter(effect => !effect.canAct)
+        .map(effect => `${formatPokemonName(playerPokemon?.name || '')} ${effect.message}`)
+        .join(' ');
+      
+      const statusState: BattleState = {
+        ...battleState,
+        message: statusMessage,
+        turn: null
+      };
+      
+      setBattleState(statusState);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      computerAttack(statusState);
+      return;
+    }
+    
     const attackingState: BattleState = {
       ...battleState,
       turn: 'player',
@@ -168,9 +193,9 @@ const BattleField: React.FC<BattleFieldProps> = ({
     
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Utiliser attackingState au lieu de battleState pour avoir la valeur correcte
+    // Apply damage
     const newComputerHP = Math.max(0, attackingState.computerHP - damageResult.damage);
-    const message = generateRandomMessage(
+    let message = generateRandomMessage(
       formatPokemonName(playerPokemon?.name || ''),
       formatPokemonName(computerPokemon?.name || ''),
       formatMoveName(move.name),
@@ -178,6 +203,11 @@ const BattleField: React.FC<BattleFieldProps> = ({
       damageResult.effectiveness,
       damageResult.isCritical
     );
+    
+    // Add status infliction message
+    if (newStatus) {
+      message += ` ${formatPokemonName(computerPokemon?.name || '')} est maintenant ${newStatus.name.toLowerCase()}!`;
+    }
     
     const damageState: BattleState = {
       ...attackingState,
@@ -208,23 +238,135 @@ const BattleField: React.FC<BattleFieldProps> = ({
       return;
     }
     
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Passer l'état mis à jour à computerAttack pour éviter la régénération
-    computerAttack(damageState);
+    // Apply status effects at end of turn
+    await applyEndOfTurnEffects(damageState);
   };
-  
+
+  const applyEndOfTurnEffects = async (currentState: BattleState) => {
+    // Apply status effects for both Pokemon
+    let newPlayerHP = currentState.playerHP;
+    let newComputerHP = currentState.computerHP;
+    let playerStatusMessages: string[] = [];
+    let computerStatusMessages: string[] = [];
+    
+    // Process player status effects
+    const updatedPlayerStatus = currentState.playerStatus
+      .map(status => {
+        const effect = applyStatusEffect(status, currentState.playerMaxHP, language);
+        if (effect.damage > 0) {
+          newPlayerHP = Math.max(0, newPlayerHP - effect.damage);
+          playerStatusMessages.push(`${formatPokemonName(playerPokemon?.name || '')} ${effect.message}`);
+        }
+        if (effect.message && effect.damage === 0) {
+          playerStatusMessages.push(`${formatPokemonName(playerPokemon?.name || '')} ${effect.message}`);
+        }
+        return { ...status, duration: status.duration - 1 };
+      })
+      .filter(status => !shouldRemoveStatus(status, 1) && status.duration > 0);
+    
+    // Process computer status effects
+    const updatedComputerStatus = currentState.computerStatus
+      .map(status => {
+        const effect = applyStatusEffect(status, currentState.computerMaxHP, language);
+        if (effect.damage > 0) {
+          newComputerHP = Math.max(0, newComputerHP - effect.damage);
+          computerStatusMessages.push(`${formatPokemonName(computerPokemon?.name || '')} ${effect.message}`);
+        }
+        if (effect.message && effect.damage === 0) {
+          computerStatusMessages.push(`${formatPokemonName(computerPokemon?.name || '')} ${effect.message}`);
+        }
+        return { ...status, duration: status.duration - 1 };
+      })
+      .filter(status => !shouldRemoveStatus(status, 1) && status.duration > 0);
+    
+    // Combine all status messages
+    const allStatusMessages = [...playerStatusMessages, ...computerStatusMessages];
+    
+    if (allStatusMessages.length > 0) {
+      const statusEffectState: BattleState = {
+        ...currentState,
+        playerHP: newPlayerHP,
+        computerHP: newComputerHP,
+        playerStatus: updatedPlayerStatus,
+        computerStatus: updatedComputerStatus,
+        message: allStatusMessages.join(' ')
+      };
+      
+      setBattleState(statusEffectState);
+      setBattleHistory(prev => [...prev, statusEffectState]);
+      
+      // Check for KO after status effects
+      if (newPlayerHP <= 0) {
+        const loseState: BattleState = {
+          ...statusEffectState,
+          battleEnded: true,
+          winner: 'computer',
+          message: `${formatPokemonName(playerPokemon?.name || '')} ${t('battle.isKo')} ${t('battle.lost')}`
+        };
+        setBattleState(loseState);
+        setBattleHistory(prev => [...prev, loseState]);
+        return;
+      }
+      
+      if (newComputerHP <= 0) {
+        const winState: BattleState = {
+          ...statusEffectState,
+          battleEnded: true,
+          winner: 'player',
+          message: `${formatPokemonName(computerPokemon?.name || '')} ${t('battle.isKo')} ${t('battle.won')}`
+        };
+        setBattleState(winState);
+        setBattleHistory(prev => [...prev, winState]);
+        return;
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+    
+    // Continue to computer turn if no status effect ended the battle
+    if (!currentState.battleEnded) {
+      computerAttack({
+        ...currentState,
+        playerHP: newPlayerHP,
+        computerHP: newComputerHP,
+        playerStatus: updatedPlayerStatus,
+        computerStatus: updatedComputerStatus
+      });
+    }
+  };
+
   const computerAttack = async (currentBattleState?: BattleState) => {
-    // Utiliser l'état passé en paramètre ou l'état actuel
     const stateToUse = currentBattleState || battleState;
     
     if (!stateToUse.battleStarted || stateToUse.battleEnded) return;
     
-    // Utiliser l'état actuel de battleState pour s'assurer d'avoir les valeurs correctes
-    const currentState = stateToUse;
+    // Check if computer can act (status effects)
+    const computerStatusEffects = stateToUse.computerStatus.map(status => 
+      applyStatusEffect(status, stateToUse.computerMaxHP, language)
+    );
+    
+    const canComputerAct = computerStatusEffects.every(effect => effect.canAct);
+    
+    if (!canComputerAct) {
+      const statusMessage = computerStatusEffects
+        .filter(effect => !effect.canAct)
+        .map(effect => `${formatPokemonName(computerPokemon?.name || '')} ${effect.message}`)
+        .join(' ');
+      
+      const statusState: BattleState = {
+        ...stateToUse,
+        message: statusMessage,
+        turn: null
+      };
+      
+      setBattleState(statusState);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      await applyEndOfTurnEffects(statusState);
+      return;
+    }
     
     const computerTurnState: BattleState = {
-      ...currentState,
+      ...stateToUse,
       turn: 'computer',
       computerAttacking: true
     };
@@ -232,15 +374,13 @@ const BattleField: React.FC<BattleFieldProps> = ({
     setBattleState(computerTurnState);
     setBattleHistory(prev => [...prev, computerTurnState]);
     
-    // Utiliser les moves sélectionnées de l'ordinateur ou une move aléatoire
+    // Get computer move
     let computerMove: Move | null = null;
     
     if (computerMoves.length > 0) {
-      // Choisir une move aléatoire parmi celles sélectionnées
       const randomIndex = Math.floor(Math.random() * computerMoves.length);
       computerMove = computerMoves[randomIndex];
     } else {
-      // Fallback sur une move aléatoire du Pokémon
       const computerMovesList = getRandomMoves(computerPokemon!, 1);
       if (computerMovesList.length > 0) {
         computerMove = await fetchMoveDetails(computerMovesList[0].move.url);
@@ -274,11 +414,16 @@ const BattleField: React.FC<BattleFieldProps> = ({
       computerMove
     );
     
+    // Try to inflict status condition on player
+    const newStatus = tryInflictStatus(computerMove, computerTurnState.playerStatus);
+    const updatedPlayerStatus = newStatus 
+      ? [...computerTurnState.playerStatus, newStatus]
+      : computerTurnState.playerStatus;
+    
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Utiliser computerTurnState au lieu de battleState pour avoir la valeur correcte
     const newPlayerHP = Math.max(0, computerTurnState.playerHP - damageResult.damage);
-    const message = generateRandomMessage(
+    let message = generateRandomMessage(
       formatPokemonName(computerPokemon?.name || ''),
       formatPokemonName(playerPokemon?.name || ''),
       formatMoveName(computerMove.name),
@@ -287,9 +432,15 @@ const BattleField: React.FC<BattleFieldProps> = ({
       damageResult.isCritical
     );
     
+    // Add status infliction message
+    if (newStatus) {
+      message += ` ${formatPokemonName(playerPokemon?.name || '')} est maintenant ${newStatus.name.toLowerCase()}!`;
+    }
+    
     const computerDamageState: BattleState = {
       ...computerTurnState,
       playerHP: newPlayerHP,
+      playerStatus: updatedPlayerStatus,
       computerAttacking: false,
       message,
       turn: null,
@@ -309,7 +460,11 @@ const BattleField: React.FC<BattleFieldProps> = ({
       
       setBattleState(loseState);
       setBattleHistory(prev => [...prev, loseState]);
+      return;
     }
+    
+    // Apply status effects at end of turn
+    await applyEndOfTurnEffects(computerDamageState);
   };
 
   const generateBattleReport = async () => {
@@ -674,6 +829,11 @@ const BattleField: React.FC<BattleFieldProps> = ({
                   {battleState.playerHP}/{battleState.playerMaxHP}
                 </span>
               </div>
+              {battleState.playerStatus.length > 0 && (
+                <div className="mt-1">
+                  <BattleStatusIndicator statuses={battleState.playerStatus} className="justify-start" />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -715,6 +875,11 @@ const BattleField: React.FC<BattleFieldProps> = ({
                   {battleState.computerHP}/{battleState.computerMaxHP}
                 </span>
               </div>
+              {battleState.computerStatus.length > 0 && (
+                <div className="mt-1">
+                  <BattleStatusIndicator statuses={battleState.computerStatus} className="justify-end" />
+                </div>
+              )}
             </div>
           </div>
         </div>

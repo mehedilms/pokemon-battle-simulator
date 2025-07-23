@@ -118,8 +118,18 @@
   50% { opacity: 0.7; }
 }
 
+@keyframes statusShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
 .animate-status-pulse {
   animation: statusPulse 2s infinite;
+}
+
+.animate-status-shake {
+  animation: statusShake 0.5s ease-in-out;
 }
 
 /* Preload the fonts before using them */
