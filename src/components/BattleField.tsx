@@ -323,8 +323,8 @@ const BattleField: React.FC<BattleFieldProps> = ({
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
     
-    // Continue to computer turn if no status effect ended the battle
-    if (!currentState.battleEnded) {
+    // Continue to computer turn if no status effect ended the battle and it's not computer's turn already
+    if (!currentState.battleEnded && currentState.turn !== 'computer') {
       computerAttack({
         ...currentState,
         playerHP: newPlayerHP,
