@@ -238,8 +238,9 @@ const BattleField: React.FC<BattleFieldProps> = ({
       return;
     }
     
-    // Apply status effects at end of turn
-    await applyEndOfTurnEffects(damageState);
+    // Switch to computer turn after player attack
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    computerAttack(damageState);
   };
 
   const applyEndOfTurnEffects = async (currentState: BattleState) => {
@@ -323,16 +324,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
     
-    // Continue to computer turn if no status effect ended the battle and it's not computer's turn already
-    if (!currentState.battleEnded && currentState.turn !== 'computer') {
-      computerAttack({
-        ...currentState,
-        playerHP: newPlayerHP,
-        computerHP: newComputerHP,
-        playerStatus: updatedPlayerStatus,
-        computerStatus: updatedComputerStatus
-      });
-    }
+    // End of turn effects applied, turn continues normally
   };
 
   const computerAttack = async (currentBattleState?: BattleState) => {
@@ -463,8 +455,7 @@ const BattleField: React.FC<BattleFieldProps> = ({
       return;
     }
     
-    // Apply status effects at end of turn
-    await applyEndOfTurnEffects(computerDamageState);
+    // Status effects are applied, turn ends
   };
 
   const generateBattleReport = async () => {
