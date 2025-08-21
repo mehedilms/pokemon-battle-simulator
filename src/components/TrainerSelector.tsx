@@ -23,7 +23,7 @@ const TrainerSelector: React.FC<TrainerSelectorProps> = ({
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [selectedType, setSelectedType] = useState<string>('all');
 
-  const regions = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh'];
+  const regions = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Unova', 'Kalos', 'Alola', 'Galar', 'Paldea'];
   const types = ['Champion', 'Gym Leader', 'Elite Four'];
 
   const getFilteredTrainers = () => {
@@ -177,6 +177,16 @@ const TrainerSelector: React.FC<TrainerSelectorProps> = ({
             </CardHeader>
             <CardContent className="pt-0">
               <div className="text-center space-y-1">
+                <div className="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden bg-gray-100">
+                  <img 
+                    src={trainer.sprite} 
+                    alt={trainer.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
+                    }}
+                  />
+                </div>
                 <p className="text-xs text-muted-foreground">
                   {trainer.region} - {trainer.game}
                 </p>

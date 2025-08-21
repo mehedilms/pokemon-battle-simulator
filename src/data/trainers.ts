@@ -8,7 +8,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Kanto',
     game: 'Red/Blue',
-    sprite: '/trainers/red.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
     team: [
       { name: 'pikachu', level: 81, moves: ['thunderbolt', 'quick-attack', 'thunder-wave', 'seismic-toss'] },
       { name: 'charizard', level: 77, moves: ['flamethrower', 'slash', 'fire-blast', 'earthquake'] },
@@ -24,7 +24,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Kanto',
     game: 'Red/Blue',
-    sprite: '/trainers/blue.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
     team: [
       { name: 'pidgeot', level: 59, moves: ['sky-attack', 'mirror-move', 'whirlwind', 'quick-attack'] },
       { name: 'alakazam', level: 57, moves: ['psychic', 'recover', 'reflect', 'psybeam'] },
@@ -42,7 +42,7 @@ export const trainers: Trainer[] = [
     region: 'Kanto',
     game: 'Red/Blue',
     type: 'rock',
-    sprite: '/trainers/brock.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png',
     team: [
       { name: 'geodude', level: 12, moves: ['tackle', 'defense-curl', 'rock-throw'] },
       { name: 'onix', level: 14, moves: ['tackle', 'screech', 'bind', 'rock-throw'] }
@@ -55,7 +55,7 @@ export const trainers: Trainer[] = [
     region: 'Kanto',
     game: 'Red/Blue',
     type: 'water',
-    sprite: '/trainers/misty.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png',
     team: [
       { name: 'staryu', level: 18, moves: ['tackle', 'water-gun', 'harden'] },
       { name: 'starmie', level: 21, moves: ['tackle', 'water-gun', 'harden', 'bubble-beam'] }
@@ -68,7 +68,7 @@ export const trainers: Trainer[] = [
     region: 'Kanto',
     game: 'Red/Blue',
     type: 'electric',
-    sprite: '/trainers/surge.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png',
     team: [
       { name: 'voltorb', level: 21, moves: ['tackle', 'screech', 'sonic-boom'] },
       { name: 'pikachu', level: 18, moves: ['thunder-wave', 'quick-attack', 'double-team'] },
@@ -82,7 +82,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Johto',
     game: 'Gold/Silver',
-    sprite: '/trainers/lance.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png',
     team: [
       { name: 'gyarados', level: 44, moves: ['flamethrower', 'dragon-rage', 'leer', 'hyper-beam'] },
       { name: 'dragonite', level: 47, moves: ['barrier', 'slam', 'blizzard', 'hyper-beam'] },
@@ -99,7 +99,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Hoenn',
     game: 'Ruby/Sapphire',
-    sprite: '/trainers/steven.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/376.png',
     team: [
       { name: 'skarmory', level: 57, moves: ['toxic', 'aerial-ace', 'spikes', 'steel-wing'] },
       { name: 'aggron', level: 56, moves: ['thunder', 'earthquake', 'solar-beam', 'dragon-claw'] },
@@ -115,7 +115,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Hoenn',
     game: 'Emerald',
-    sprite: '/trainers/wallace.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png',
     team: [
       { name: 'wailord', level: 57, moves: ['water-spout', 'double-edge', 'blizzard', 'amnesia'] },
       { name: 'tentacruel', level: 55, moves: ['toxic', 'hydro-pump', 'sludge-bomb', 'ice-beam'] },
@@ -132,7 +132,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Sinnoh',
     game: 'Diamond/Pearl',
-    sprite: '/trainers/cynthia.png',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png',
     team: [
       { name: 'spiritomb', level: 61, moves: ['silver-wind', 'embargo', 'psychic', 'dark-pulse'] },
       { name: 'roserade', level: 60, moves: ['energy-ball', 'sludge-bomb', 'extrasensory', 'shadow-ball'] },
@@ -140,6 +140,172 @@ export const trainers: Trainer[] = [
       { name: 'lucario', level: 60, moves: ['aura-sphere', 'dragon-pulse', 'psychic', 'earthquake'] },
       { name: 'milotic', level: 60, moves: ['surf', 'ice-beam', 'mirror-coat', 'aqua-ring'] },
       { name: 'garchomp', level: 62, moves: ['dragon-rush', 'earthquake', 'brick-break', 'giga-impact'] }
+    ]
+  },
+  
+  // Unys Champions
+  {
+    id: 'alder-unova',
+    name: 'Alder',
+    title: 'Champion',
+    region: 'Unova',
+    game: 'Black/White',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/637.png',
+    team: [
+      { name: 'accelgor', level: 75, moves: ['bug-buzz', 'focus-blast', 'encore', 'swift'] },
+      { name: 'bouffalant', level: 75, moves: ['head-charge', 'earthquake', 'stone-edge', 'swords-dance'] },
+      { name: 'braviary', level: 75, moves: ['brave-bird', 'shadow-claw', 'rock-slide', 'bulk-up'] },
+      { name: 'conkeldurr', level: 75, moves: ['hammer-arm', 'stone-edge', 'grass-knot', 'bulk-up'] },
+      { name: 'druddigon', level: 75, moves: ['dragon-claw', 'flamethrower', 'thunder-punch', 'focus-blast'] },
+      { name: 'volcarona', level: 77, moves: ['fire-dance', 'bug-buzz', 'heat-wave', 'quiver-dance'] }
+    ]
+  },
+  {
+    id: 'iris-unova',
+    name: 'Iris',
+    title: 'Champion',
+    region: 'Unova',
+    game: 'Black 2/White 2',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/612.png',
+    team: [
+      { name: 'hydreigon', level: 57, moves: ['dragon-pulse', 'fire-blast', 'focus-blast', 'surf'] },
+      { name: 'druddigon', level: 57, moves: ['dragon-claw', 'thunder-punch', 'fire-punch', 'rock-slide'] },
+      { name: 'aggron', level: 57, moves: ['head-smash', 'earthquake', 'dragon-claw', 'thunder-wave'] },
+      { name: 'archeops', level: 57, moves: ['acrobatics', 'stone-edge', 'dragon-claw', 'shadow-claw'] },
+      { name: 'lapras', level: 57, moves: ['surf', 'thunderbolt', 'psychic', 'dragon-pulse'] },
+      { name: 'haxorus', level: 59, moves: ['outrage', 'earthquake', 'poison-jab', 'shadow-claw'] }
+    ]
+  },
+
+  // Kalos Champion
+  {
+    id: 'diantha-kalos',
+    name: 'Diantha',
+    title: 'Champion',
+    region: 'Kalos',
+    game: 'X/Y',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png',
+    team: [
+      { name: 'hawlucha', level: 64, moves: ['flying-press', 'x-scissor', 'hone-claws', 'roost'] },
+      { name: 'tyrantrum', level: 65, moves: ['head-smash', 'earthquake', 'crunch', 'dragon-claw'] },
+      { name: 'aurorus', level: 65, moves: ['blizzard', 'hyper-beam', 'thunder', 'ancient-power'] },
+      { name: 'gourgeist', level: 65, moves: ['phantom-force', 'seed-bomb', 'flamethrower', 'shadow-sneak'] },
+      { name: 'goodra', level: 66, moves: ['dragon-pulse', 'sludge-bomb', 'focus-blast', 'thunderbolt'] },
+      { name: 'gardevoir', level: 68, moves: ['moonblast', 'psychic', 'shadow-ball', 'focus-blast'] }
+    ]
+  },
+
+  // Alola Champion
+  {
+    id: 'kukui-alola',
+    name: 'Professor Kukui',
+    title: 'Champion',
+    region: 'Alola',
+    game: 'Sun/Moon',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/745.png',
+    team: [
+      { name: 'lycanroc', level: 57, moves: ['stone-edge', 'crunch', 'accelerock', 'fire-fang'] },
+      { name: 'braviary', level: 57, moves: ['brave-bird', 'shadow-claw', 'rock-slide', 'bulk-up'] },
+      { name: 'magnezone', level: 56, moves: ['thunderbolt', 'flash-cannon', 'tri-attack', 'thunder-wave'] },
+      { name: 'komala', level: 57, moves: ['last-resort', 'wood-hammer', 'earthquake', 'u-turn'] },
+      { name: 'ninetales-alola', level: 56, moves: ['blizzard', 'dazzling-gleam', 'psychic', 'aurora-veil'] },
+      { name: 'incineroar', level: 58, moves: ['darkest-lariat', 'flare-blitz', 'throat-chop', 'earthquake'] }
+    ]
+  },
+
+  // Galar Champions
+  {
+    id: 'leon-galar',
+    name: 'Leon',
+    title: 'Champion',
+    region: 'Galar',
+    game: 'Sword/Shield',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+    team: [
+      { name: 'aegislash', level: 62, moves: ['shadow-ball', 'flash-cannon', 'shadow-sneak', 'kings-shield'] },
+      { name: 'dragapult', level: 62, moves: ['dragon-darts', 'phantom-force', 'u-turn', 'thunder-wave'] },
+      { name: 'haxorus', level: 63, moves: ['outrage', 'earthquake', 'poison-jab', 'shadow-claw'] },
+      { name: 'seismitoad', level: 64, moves: ['liquidation', 'earthquake', 'poison-jab', 'stealth-rock'] },
+      { name: 'mr-rime', level: 64, moves: ['psychic', 'dazzling-gleam', 'freeze-dry', 'focus-blast'] },
+      { name: 'charizard', level: 65, moves: ['air-slash', 'flamethrower', 'thunder-punch', 'dragon-pulse'] }
+    ]
+  },
+
+  // Paldea Champions
+  {
+    id: 'nemona-paldea',
+    name: 'Nemona',
+    title: 'Champion',
+    region: 'Paldea',
+    game: 'Scarlet/Violet',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png',
+    team: [
+      { name: 'lycanroc', level: 65, moves: ['stone-edge', 'psychic-fangs', 'play-rough', 'accelerock'] },
+      { name: 'altaria', level: 65, moves: ['dragon-pulse', 'moonblast', 'flamethrower', 'roost'] },
+      { name: 'goodra', level: 65, moves: ['dragon-pulse', 'flamethrower', 'sludge-bomb', 'thunderbolt'] },
+      { name: 'dudunsparce', level: 65, moves: ['hyper-drill', 'dragon-rush', 'poison-jab', 'roost'] },
+      { name: 'orthworm', level: 65, moves: ['iron-tail', 'earthquake', 'body-press', 'smack-down'] },
+      { name: 'meowscarada', level: 66, moves: ['flower-trick', 'night-slash', 'u-turn', 'shadow-claw'] }
+    ]
+  },
+
+  // More Gym Leaders across generations
+  {
+    id: 'volkner-sinnoh',
+    name: 'Volkner',
+    title: 'Gym Leader',
+    region: 'Sinnoh',
+    game: 'Diamond/Pearl',
+    type: 'electric',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/405.png',
+    team: [
+      { name: 'jolteon', level: 46, moves: ['thunder', 'shadow-ball', 'signal-beam', 'double-kick'] },
+      { name: 'raichu', level: 46, moves: ['thunder', 'focus-blast', 'grass-knot', 'brick-break'] },
+      { name: 'luxray', level: 48, moves: ['thunder-fang', 'crunch', 'fire-fang', 'superpower'] },
+      { name: 'electivire', level: 50, moves: ['thunder-punch', 'fire-punch', 'ice-punch', 'earthquake'] }
+    ]
+  },
+  {
+    id: 'flannery-hoenn',
+    name: 'Flannery',
+    title: 'Gym Leader',
+    region: 'Hoenn',
+    game: 'Ruby/Sapphire',
+    type: 'fire',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png',
+    team: [
+      { name: 'numel', level: 24, moves: ['overheat', 'take-down', 'magnitude', 'sunny-day'] },
+      { name: 'slugma', level: 24, moves: ['overheat', 'rock-slide', 'light-screen', 'sunny-day'] },
+      { name: 'camerupt', level: 26, moves: ['overheat', 'tackle', 'sunny-day', 'attract'] },
+      { name: 'torkoal', level: 29, moves: ['overheat', 'body-slam', 'white-smoke', 'attract'] }
+    ]
+  },
+  {
+    id: 'elesa-unova',
+    name: 'Elesa',
+    title: 'Gym Leader',
+    region: 'Unova',
+    game: 'Black/White',
+    type: 'electric',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/523.png',
+    team: [
+      { name: 'emolga', level: 25, moves: ['volt-switch', 'aerial-ace', 'pursuit', 'double-team'] },
+      { name: 'emolga', level: 25, moves: ['volt-switch', 'aerial-ace', 'pursuit', 'double-team'] },
+      { name: 'zebstrika', level: 27, moves: ['spark', 'pursuit', 'stomp', 'thunder-wave'] }
+    ]
+  },
+  {
+    id: 'clemont-kalos',
+    name: 'Clemont',
+    title: 'Gym Leader',
+    region: 'Kalos',
+    game: 'X/Y',
+    type: 'electric',
+    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/695.png',
+    team: [
+      { name: 'emolga', level: 35, moves: ['volt-switch', 'acrobatics', 'u-turn', 'light-screen'] },
+      { name: 'magneton', level: 35, moves: ['thunderbolt', 'flash-cannon', 'volt-switch', 'thunder-wave'] },
+      { name: 'heliolisk', level: 37, moves: ['thunderbolt', 'hyper-voice', 'grass-knot', 'thunder-wave'] }
     ]
   }
 ];

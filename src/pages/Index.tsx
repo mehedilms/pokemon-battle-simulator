@@ -6,7 +6,7 @@ import PokemonSelector from '../components/PokemonSelector';
 import TrainerSelector from '../components/TrainerSelector';
 import MoveSelector from '../components/MoveSelector';
 import BattleField from '../components/BattleField';
-import TrainerBattleField from '../components/TrainerBattleField';
+import SimpleTrainerBattle from '../components/SimpleTrainerBattle';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PixelText from '../components/PixelText';
@@ -326,7 +326,7 @@ const Index = () => {
                 </div>
               </div>
             ) : (
-              <TrainerBattleField 
+              <SimpleTrainerBattle 
                 playerTrainer={playerTrainer} 
                 computerTrainer={computerTrainer}
                 onReset={handleReset}
