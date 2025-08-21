@@ -307,6 +307,394 @@ export const trainers: Trainer[] = [
       { name: 'magneton', level: 35, moves: ['thunderbolt', 'flash-cannon', 'volt-switch', 'thunder-wave'] },
       { name: 'heliolisk', level: 37, moves: ['thunderbolt', 'hyper-voice', 'grass-knot', 'thunder-wave'] }
     ]
+  },
+  
+  // Ajout de plus de dresseurs Kanto
+  {
+    id: 'erika-kanto',
+    name: 'Erika',
+    title: 'Gym Leader',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'grass',
+    sprite: 'https://archives.bulbagarden.net/media/upload/2/24/FireRed_LeafGreen_Erika.png',
+    team: [
+      { name: 'victreebel', level: 29, moves: ['stun-spore', 'acid', 'petal-dance', 'sleep-powder'] },
+      { name: 'tangela', level: 24, moves: ['constrict', 'bind', 'absorb', 'poisonpowder'] },
+      { name: 'vileplume', level: 29, moves: ['sleep-powder', 'acid', 'petal-dance', 'toxic'] }
+    ]
+  },
+  {
+    id: 'koga-kanto',
+    name: 'Koga',
+    title: 'Gym Leader',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'poison',
+    sprite: 'https://archives.bulbagarden.net/media/upload/4/45/FireRed_LeafGreen_Koga.png',
+    team: [
+      { name: 'koffing', level: 37, moves: ['tackle', 'smog', 'sludge', 'smokescreen'] },
+      { name: 'muk', level: 39, moves: ['minimize', 'sludge', 'acid-armor', 'toxic'] },
+      { name: 'koffing', level: 37, moves: ['tackle', 'smog', 'sludge', 'smokescreen'] },
+      { name: 'weezing', level: 43, moves: ['tackle', 'smog', 'sludge', 'smokescreen'] }
+    ]
+  },
+  {
+    id: 'sabrina-kanto',
+    name: 'Sabrina',
+    title: 'Gym Leader',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'psychic',
+    sprite: 'https://archives.bulbagarden.net/media/upload/0/09/FireRed_LeafGreen_Sabrina.png',
+    team: [
+      { name: 'kadabra', level: 38, moves: ['kinesis', 'psybeam', 'recover', 'psychic'] },
+      { name: 'mr-mime', level: 37, moves: ['barrier', 'psybeam', 'bide', 'substitute'] },
+      { name: 'venomoth', level: 38, moves: ['leech-life', 'supersonic', 'psybeam', 'psychic'] },
+      { name: 'alakazam', level: 43, moves: ['kinesis', 'psybeam', 'recover', 'psychic'] }
+    ]
+  },
+  {
+    id: 'blaine-kanto',
+    name: 'Blaine',
+    title: 'Gym Leader',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'fire',
+    sprite: 'https://archives.bulbagarden.net/media/upload/1/1c/FireRed_LeafGreen_Blaine.png',
+    team: [
+      { name: 'growlithe', level: 42, moves: ['bite', 'roar', 'ember', 'leer'] },
+      { name: 'ponyta', level: 40, moves: ['stomp', 'growl', 'ember', 'tail-whip'] },
+      { name: 'rapidash', level: 42, moves: ['stomp', 'growl', 'fire-spin', 'take-down'] },
+      { name: 'arcanine', level: 47, moves: ['bite', 'roar', 'take-down', 'fire-blast'] }
+    ]
+  },
+  {
+    id: 'giovanni-kanto',
+    name: 'Giovanni',
+    title: 'Gym Leader',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'ground',
+    sprite: 'https://archives.bulbagarden.net/media/upload/8/8c/FireRed_LeafGreen_Giovanni.png',
+    team: [
+      { name: 'rhyhorn', level: 45, moves: ['stomp', 'tail-whip', 'fury-attack', 'horn-drill'] },
+      { name: 'dugtrio', level: 42, moves: ['growl', 'dig', 'sand-attack', 'slash'] },
+      { name: 'nidoqueen', level: 44, moves: ['scratch', 'tail-whip', 'body-slam', 'double-kick'] },
+      { name: 'nidoking', level: 45, moves: ['thrash', 'double-kick', 'poison-sting', 'focus-energy'] },
+      { name: 'rhydon', level: 50, moves: ['stomp', 'tail-whip', 'fury-attack', 'horn-drill'] }
+    ]
+  },
+
+  // Elite Four Kanto
+  {
+    id: 'lorelei-kanto',
+    name: 'Lorelei',
+    title: 'Elite Four',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'ice',
+    sprite: 'https://archives.bulbagarden.net/media/upload/8/8c/FireRed_LeafGreen_Lorelei.png',
+    team: [
+      { name: 'dewgong', level: 54, moves: ['growl', 'aurora-beam', 'rest', 'take-down'] },
+      { name: 'cloyster', level: 53, moves: ['withdraw', 'aurora-beam', 'clamp', 'spike-cannon'] },
+      { name: 'slowbro', level: 54, moves: ['growl', 'water-gun', 'withdraw', 'amnesia'] },
+      { name: 'jynx', level: 56, moves: ['doubleslap', 'ice-punch', 'rest', 'psywave'] },
+      { name: 'lapras', level: 56, moves: ['water-gun', 'body-slam', 'confuse-ray', 'ice-beam'] }
+    ]
+  },
+  {
+    id: 'bruno-kanto',
+    name: 'Bruno',
+    title: 'Elite Four',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'fighting',
+    sprite: 'https://archives.bulbagarden.net/media/upload/9/97/FireRed_LeafGreen_Bruno.png',
+    team: [
+      { name: 'onix', level: 53, moves: ['bind', 'rock-throw', 'rage', 'slam'] },
+      { name: 'hitmonchan', level: 55, moves: ['comet-punch', 'fire-punch', 'ice-punch', 'thunder-punch'] },
+      { name: 'hitmonlee', level: 55, moves: ['double-kick', 'meditate', 'rolling-kick', 'hi-jump-kick'] },
+      { name: 'onix', level: 56, moves: ['bind', 'rock-throw', 'rage', 'slam'] },
+      { name: 'machamp', level: 58, moves: ['karate-chop', 'leer', 'focus-energy', 'submission'] }
+    ]
+  },
+  {
+    id: 'agatha-kanto',
+    name: 'Agatha',
+    title: 'Elite Four',
+    region: 'Kanto',
+    game: 'Red/Blue',
+    type: 'ghost',
+    sprite: 'https://archives.bulbagarden.net/media/upload/a/ab/FireRed_LeafGreen_Agatha.png',
+    team: [
+      { name: 'gengar', level: 56, moves: ['substitute', 'lick', 'confuse-ray', 'night-shade'] },
+      { name: 'golbat', level: 56, moves: ['supersonic', 'confuse-ray', 'wing-attack', 'haze'] },
+      { name: 'haunter', level: 55, moves: ['lick', 'confuse-ray', 'night-shade', 'toxic'] },
+      { name: 'arbok', level: 58, moves: ['wrap', 'poison-sting', 'bite', 'glare'] }
+    ]
+  },
+
+  // Johto Gym Leaders
+  {
+    id: 'falkner-johto',
+    name: 'Falkner',
+    title: 'Gym Leader',
+    region: 'Johto',
+    game: 'Gold/Silver',
+    type: 'flying',
+    sprite: 'https://archives.bulbagarden.net/media/upload/f/f2/HeartGold_SoulSilver_Falkner.png',
+    team: [
+      { name: 'pidgey', level: 7, moves: ['tackle', 'sand-attack'] },
+      { name: 'pidgeotto', level: 9, moves: ['tackle', 'sand-attack', 'gust'] }
+    ]
+  },
+  {
+    id: 'bugsy-johto',
+    name: 'Bugsy',
+    title: 'Gym Leader',
+    region: 'Johto',
+    game: 'Gold/Silver',
+    type: 'bug',
+    sprite: 'https://archives.bulbagarden.net/media/upload/9/9a/HeartGold_SoulSilver_Bugsy.png',
+    team: [
+      { name: 'metapod', level: 14, moves: ['tackle', 'string-shot', 'harden'] },
+      { name: 'kakuna', level: 14, moves: ['poison-sting', 'string-shot', 'harden'] },
+      { name: 'scyther', level: 16, moves: ['quick-attack', 'leer', 'focus-energy', 'fury-cutter'] }
+    ]
+  },
+  {
+    id: 'whitney-johto',
+    name: 'Whitney',
+    title: 'Gym Leader',
+    region: 'Johto',
+    game: 'Gold/Silver',
+    type: 'normal',
+    sprite: 'https://archives.bulbagarden.net/media/upload/e/e6/HeartGold_SoulSilver_Whitney.png',
+    team: [
+      { name: 'clefairy', level: 18, moves: ['growl', 'encore', 'doubleslap', 'metronome'] },
+      { name: 'miltank', level: 20, moves: ['growl', 'stomp', 'milk-drink', 'rollout'] }
+    ]
+  },
+  {
+    id: 'morty-johto',
+    name: 'Morty',
+    title: 'Gym Leader',
+    region: 'Johto',
+    game: 'Gold/Silver',
+    type: 'ghost',
+    sprite: 'https://archives.bulbagarden.net/media/upload/1/14/HeartGold_SoulSilver_Morty.png',
+    team: [
+      { name: 'gastly', level: 21, moves: ['lick', 'spite', 'mean-look', 'curse'] },
+      { name: 'haunter', level: 21, moves: ['lick', 'spite', 'mean-look', 'curse'] },
+      { name: 'haunter', level: 23, moves: ['lick', 'spite', 'mean-look', 'curse'] },
+      { name: 'gengar', level: 25, moves: ['lick', 'spite', 'mean-look', 'curse'] }
+    ]
+  },
+
+  // Hoenn Gym Leaders additionnels  
+  {
+    id: 'roxanne-hoenn',
+    name: 'Roxanne',  
+    title: 'Gym Leader',
+    region: 'Hoenn',
+    game: 'Ruby/Sapphire',
+    type: 'rock',
+    sprite: 'https://archives.bulbagarden.net/media/upload/3/38/Omega_Ruby_Alpha_Sapphire_Roxanne.png',
+    team: [
+      { name: 'geodude', level: 12, moves: ['tackle', 'defense-curl', 'rock-throw'] },
+      { name: 'nosepass', level: 15, moves: ['tackle', 'harden', 'rock-throw', 'block'] }
+    ]
+  },
+  {
+    id: 'brawly-hoenn',
+    name: 'Brawly',
+    title: 'Gym Leader', 
+    region: 'Hoenn',
+    game: 'Ruby/Sapphire',
+    type: 'fighting',
+    sprite: 'https://archives.bulbagarden.net/media/upload/b/b0/Omega_Ruby_Alpha_Sapphire_Brawly.png',
+    team: [
+      { name: 'machop', level: 16, moves: ['karate-chop', 'low-kick', 'seismic-toss'] },
+      { name: 'makuhita', level: 18, moves: ['tackle', 'focus-energy', 'arm-thrust', 'vital-throw'] }
+    ]
+  },
+  {
+    id: 'wattson-hoenn',
+    name: 'Wattson',
+    title: 'Gym Leader',
+    region: 'Hoenn', 
+    game: 'Ruby/Sapphire',
+    type: 'electric',
+    sprite: 'https://archives.bulbagarden.net/media/upload/5/5a/Omega_Ruby_Alpha_Sapphire_Wattson.png',
+    team: [
+      { name: 'voltorb', level: 20, moves: ['tackle', 'screech', 'sonic-boom', 'spark'] },
+      { name: 'electrike', level: 20, moves: ['tackle', 'thunder-wave', 'leer', 'quick-attack'] },
+      { name: 'magneton', level: 22, moves: ['tackle', 'thunder-wave', 'sonic-boom', 'supersonic'] },
+      { name: 'manectric', level: 24, moves: ['tackle', 'thunder-wave', 'leer', 'quick-attack'] }
+    ]
+  },
+
+  // Unova Gym Leaders additionnels
+  {
+    id: 'cilan-unova',
+    name: 'Cilan',
+    title: 'Gym Leader',
+    region: 'Unova',
+    game: 'Black/White',
+    type: 'grass',
+    sprite: 'https://archives.bulbagarden.net/media/upload/2/26/Black_White_Cilan.png',
+    team: [
+      { name: 'lillipup', level: 12, moves: ['work-up', 'bite', 'baby-doll-eyes', 'retaliate'] },
+      { name: 'pansage', level: 14, moves: ['scratch', 'play-nice', 'lick', 'vine-whip'] }
+    ]
+  },
+  {
+    id: 'chili-unova',
+    name: 'Chili',
+    title: 'Gym Leader',
+    region: 'Unova',
+    game: 'Black/White',
+    type: 'fire',
+    sprite: 'https://archives.bulbagarden.net/media/upload/3/3a/Black_White_Chili.png',
+    team: [
+      { name: 'lillipup', level: 12, moves: ['work-up', 'bite', 'baby-doll-eyes', 'retaliate'] },
+      { name: 'pansear', level: 14, moves: ['scratch', 'play-nice', 'lick', 'incinerate'] }
+    ]
+  },
+  {
+    id: 'cress-unova',
+    name: 'Cress',
+    title: 'Gym Leader',
+    region: 'Unova',
+    game: 'Black/White',
+    type: 'water',
+    sprite: 'https://archives.bulbagarden.net/media/upload/7/71/Black_White_Cress.png',
+    team: [
+      { name: 'lillipup', level: 12, moves: ['work-up', 'bite', 'baby-doll-eyes', 'retaliate'] },
+      { name: 'panpour', level: 14, moves: ['scratch', 'play-nice', 'lick', 'water-gun'] }
+    ]
+  },
+  {
+    id: 'lenora-unova',
+    name: 'Lenora',
+    title: 'Gym Leader',
+    region: 'Unova',
+    game: 'Black/White',
+    type: 'normal',
+    sprite: 'https://archives.bulbagarden.net/media/upload/9/92/Black_White_Lenora.png',
+    team: [
+      { name: 'herdier', level: 18, moves: ['leer', 'bite', 'take-down', 'work-up'] },
+      { name: 'watchog', level: 20, moves: ['leer', 'bite', 'bide', 'detect'] }
+    ]
+  },
+
+  // Rivaux célèbres
+  {
+    id: 'silver-johto',
+    name: 'Silver',
+    title: 'Rival',
+    region: 'Johto',
+    game: 'Gold/Silver',
+    sprite: 'https://archives.bulbagarden.net/media/upload/4/41/HeartGold_SoulSilver_Silver.png',
+    team: [
+      { name: 'crobat', level: 40, moves: ['quick-attack', 'wing-attack', 'bite', 'astonish'] },
+      { name: 'magneton', level: 38, moves: ['thunder-wave', 'sonic-boom', 'thunder-shock', 'screech'] },
+      { name: 'gengar', level: 40, moves: ['mean-look', 'curse', 'shadow-ball', 'confuse-ray'] },
+      { name: 'alakazam', level: 38, moves: ['disable', 'recover', 'psychic', 'future-sight'] },
+      { name: 'meganium', level: 42, moves: ['reflect', 'razor-leaf', 'poisonpowder', 'body-slam'] }
+    ]
+  },
+  {
+    id: 'may-hoenn',
+    name: 'May',
+    title: 'Rival',
+    region: 'Hoenn',
+    game: 'Ruby/Sapphire',
+    sprite: 'https://archives.bulbagarden.net/media/upload/1/1b/Omega_Ruby_Alpha_Sapphire_May.png',
+    team: [
+      { name: 'swellow', level: 31, moves: ['focus-energy', 'quick-attack', 'wing-attack', 'endeavor'] },
+      { name: 'mightyena', level: 32, moves: ['roar', 'swagger', 'assurance', 'crunch'] },
+      { name: 'wailmer', level: 32, moves: ['rollout', 'whirlpool', 'astonish', 'water-pulse'] },
+      { name: 'combusken', level: 34, moves: ['double-kick', 'peck', 'sand-attack', 'bulk-up'] }
+    ]
+  },
+  {
+    id: 'barry-sinnoh',
+    name: 'Barry',
+    title: 'Rival',
+    region: 'Sinnoh',
+    game: 'Diamond/Pearl',
+    sprite: 'https://archives.bulbagarden.net/media/upload/3/39/Platinum_Barry.png',
+    team: [
+      { name: 'staraptor', level: 48, moves: ['close-combat', 'brave-bird', 'endeavor', 'take-down'] },
+      { name: 'heracross', level: 48, moves: ['night-slash', 'brick-break', 'aerial-ace', 'shadow-claw'] },
+      { name: 'rapidash', level: 47, moves: ['flare-blitz', 'bounce', 'fire-blast', 'solar-beam'] },
+      { name: 'floatzel', level: 49, moves: ['ice-fang', 'crunch', 'aqua-jet', 'swift'] },
+      { name: 'snorlax', level: 49, moves: ['giga-impact', 'crunch', 'rest', 'sleep-talk'] },
+      { name: 'empoleon', level: 51, moves: ['drill-peck', 'hydro-pump', 'metal-claw', 'earthquake'] }
+    ]
+  },
+
+  // Plus de champions Kalos
+  {
+    id: 'korrina-kalos',
+    name: 'Korrina',
+    title: 'Gym Leader',
+    region: 'Kalos',
+    game: 'X/Y',
+    type: 'fighting',
+    sprite: 'https://archives.bulbagarden.net/media/upload/9/9f/XY_Korrina.png',
+    team: [
+      { name: 'mienfoo', level: 29, moves: ['fake-out', 'double-slap', 'force-palm', 'drain-punch'] },
+      { name: 'machoke', level: 28, moves: ['rock-tomb', 'revenge', 'vital-throw', 'wake-up-slap'] },
+      { name: 'hawlucha', level: 32, moves: ['karate-chop', 'wing-attack', 'roost', 'flying-press'] }
+    ]
+  },
+
+  // Champions Galar additionnels
+  {
+    id: 'raihan-galar',
+    name: 'Raihan',
+    title: 'Gym Leader',
+    region: 'Galar',
+    game: 'Sword/Shield',
+    type: 'dragon',
+    sprite: 'https://archives.bulbagarden.net/media/upload/b/b7/Sword_Shield_Raihan.png',
+    team: [
+      { name: 'flygon', level: 46, moves: ['dragon-pulse', 'crunch', 'earth-power', 'u-turn'] },
+      { name: 'sandaconda', level: 46, moves: ['bulldoze', 'body-slam', 'glare', 'sandstorm'] },
+      { name: 'goodra', level: 47, moves: ['dragon-pulse', 'muddy-water', 'power-whip', 'breaking-swipe'] },
+      { name: 'duraludon', level: 48, moves: ['flash-cannon', 'dragon-pulse', 'thunderbolt', 'hyper-beam'] }
+    ]
+  },
+
+  // Membres Team Rocket
+  {
+    id: 'jessie-rocket',
+    name: 'Jessie',
+    title: 'Team Rocket',
+    region: 'Kanto',
+    game: 'Anime',
+    sprite: 'https://archives.bulbagarden.net/media/upload/c/cb/Jessie_anime.png',
+    team: [
+      { name: 'arbok', level: 35, moves: ['poison-sting', 'bite', 'glare', 'acid'] },
+      { name: 'wobbuffet', level: 35, moves: ['counter', 'mirror-coat', 'safeguard', 'destiny-bond'] },
+      { name: 'seviper', level: 35, moves: ['poison-tail', 'crunch', 'glare', 'haze'] }
+    ]
+  },
+  {
+    id: 'james-rocket',
+    name: 'James',
+    title: 'Team Rocket',
+    region: 'Kanto',
+    game: 'Anime',
+    sprite: 'https://archives.bulbagarden.net/media/upload/7/7a/James_anime.png',
+    team: [
+      { name: 'weezing', level: 35, moves: ['sludge', 'smokescreen', 'tackle', 'self-destruct'] },
+      { name: 'cacnea', level: 35, moves: ['pin-missile', 'sand-attack', 'needle-arm', 'cotton-spore'] },
+      { name: 'dustox', level: 35, moves: ['gust', 'psybeam', 'whirlwind', 'toxic'] }
+    ]
   }
 ];
 
