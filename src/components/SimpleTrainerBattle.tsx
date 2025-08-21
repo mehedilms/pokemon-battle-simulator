@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { getRandomBackground } from '../data/backgrounds';
 import AttackAnimation from './AttackAnimation';
 import PixelText from './PixelText';
+import TrainerAvatar from './TrainerAvatar';
 import { useLanguage } from '../contexts/LanguageContext';
 import { RefreshCcw } from 'lucide-react';
 
@@ -297,13 +298,12 @@ const SimpleTrainerBattle: React.FC<SimpleTrainerBattleProps> = ({
         {/* Trainer Info */}
         <div className="flex justify-between items-center mb-4">
           <div className="text-center bg-white bg-opacity-90 rounded-lg p-3 flex items-center gap-3">
-            <img 
-              src={playerTrainer?.sprite} 
-              alt={playerTrainer?.name}
-              className="w-12 h-12 rounded-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
-              }}
+            <TrainerAvatar 
+              name={playerTrainer?.name || ''}
+              sprite={playerTrainer?.sprite || ''}
+              title={playerTrainer?.title || ''}
+              type={playerTrainer?.type}
+              size="md"
             />
             <div>
               <PixelText className="font-bold text-blue-600">
@@ -320,13 +320,12 @@ const SimpleTrainerBattle: React.FC<SimpleTrainerBattleProps> = ({
               </PixelText>
               <div className="text-xs">{computerTrainer?.title}</div>
             </div>
-            <img 
-              src={computerTrainer?.sprite} 
-              alt={computerTrainer?.name}
-              className="w-12 h-12 rounded-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
-              }}
+            <TrainerAvatar 
+              name={computerTrainer?.name || ''}
+              sprite={computerTrainer?.sprite || ''}
+              title={computerTrainer?.title || ''}
+              type={computerTrainer?.type}
+              size="md"
             />
           </div>
         </div>

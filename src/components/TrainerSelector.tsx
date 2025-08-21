@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import PixelText from './PixelText';
+import TrainerAvatar from './TrainerAvatar';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface TrainerSelectorProps {
@@ -177,14 +178,13 @@ const TrainerSelector: React.FC<TrainerSelectorProps> = ({
             </CardHeader>
             <CardContent className="pt-0">
               <div className="text-center space-y-1">
-                <div className="w-16 h-16 mx-auto mb-2 rounded-full overflow-hidden bg-gray-100">
-                  <img 
-                    src={trainer.sprite} 
-                    alt={trainer.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png';
-                    }}
+                <div className="flex justify-center mb-2">
+                  <TrainerAvatar 
+                    name={trainer.name}
+                    sprite={trainer.sprite}
+                    title={trainer.title}
+                    type={trainer.type}
+                    size="lg"
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">

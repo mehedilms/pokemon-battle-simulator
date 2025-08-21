@@ -8,7 +8,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Kanto',
     game: 'Red/Blue',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/2/2f/FireRed_LeafGreen_Red.png',
     team: [
       { name: 'pikachu', level: 81, moves: ['thunderbolt', 'quick-attack', 'thunder-wave', 'seismic-toss'] },
       { name: 'charizard', level: 77, moves: ['flamethrower', 'slash', 'fire-blast', 'earthquake'] },
@@ -24,7 +24,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Kanto',
     game: 'Red/Blue',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/c/c1/FireRed_LeafGreen_Blue.png',
     team: [
       { name: 'pidgeot', level: 59, moves: ['sky-attack', 'mirror-move', 'whirlwind', 'quick-attack'] },
       { name: 'alakazam', level: 57, moves: ['psychic', 'recover', 'reflect', 'psybeam'] },
@@ -42,7 +42,7 @@ export const trainers: Trainer[] = [
     region: 'Kanto',
     game: 'Red/Blue',
     type: 'rock',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/7/78/FireRed_LeafGreen_Brock.png',
     team: [
       { name: 'geodude', level: 12, moves: ['tackle', 'defense-curl', 'rock-throw'] },
       { name: 'onix', level: 14, moves: ['tackle', 'screech', 'bind', 'rock-throw'] }
@@ -55,7 +55,7 @@ export const trainers: Trainer[] = [
     region: 'Kanto',
     game: 'Red/Blue',
     type: 'water',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/b/bf/FireRed_LeafGreen_Misty.png',
     team: [
       { name: 'staryu', level: 18, moves: ['tackle', 'water-gun', 'harden'] },
       { name: 'starmie', level: 21, moves: ['tackle', 'water-gun', 'harden', 'bubble-beam'] }
@@ -68,7 +68,7 @@ export const trainers: Trainer[] = [
     region: 'Kanto',
     game: 'Red/Blue',
     type: 'electric',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/c/c3/FireRed_LeafGreen_Lt_Surge.png',
     team: [
       { name: 'voltorb', level: 21, moves: ['tackle', 'screech', 'sonic-boom'] },
       { name: 'pikachu', level: 18, moves: ['thunder-wave', 'quick-attack', 'double-team'] },
@@ -82,7 +82,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Johto',
     game: 'Gold/Silver',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/5/5a/HeartGold_SoulSilver_Lance.png',
     team: [
       { name: 'gyarados', level: 44, moves: ['flamethrower', 'dragon-rage', 'leer', 'hyper-beam'] },
       { name: 'dragonite', level: 47, moves: ['barrier', 'slam', 'blizzard', 'hyper-beam'] },
@@ -99,7 +99,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Hoenn',
     game: 'Ruby/Sapphire',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/376.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/8/81/Omega_Ruby_Alpha_Sapphire_Steven.png',
     team: [
       { name: 'skarmory', level: 57, moves: ['toxic', 'aerial-ace', 'spikes', 'steel-wing'] },
       { name: 'aggron', level: 56, moves: ['thunder', 'earthquake', 'solar-beam', 'dragon-claw'] },
@@ -115,7 +115,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Hoenn',
     game: 'Emerald',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/1/1f/Omega_Ruby_Alpha_Sapphire_Wallace.png',
     team: [
       { name: 'wailord', level: 57, moves: ['water-spout', 'double-edge', 'blizzard', 'amnesia'] },
       { name: 'tentacruel', level: 55, moves: ['toxic', 'hydro-pump', 'sludge-bomb', 'ice-beam'] },
@@ -132,7 +132,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Sinnoh',
     game: 'Diamond/Pearl',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/4/4d/Platinum_Cynthia.png',
     team: [
       { name: 'spiritomb', level: 61, moves: ['silver-wind', 'embargo', 'psychic', 'dark-pulse'] },
       { name: 'roserade', level: 60, moves: ['energy-ball', 'sludge-bomb', 'extrasensory', 'shadow-ball'] },
@@ -150,7 +150,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Unova',
     game: 'Black/White',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/637.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/c/c7/Black_White_Alder.png',
     team: [
       { name: 'accelgor', level: 75, moves: ['bug-buzz', 'focus-blast', 'encore', 'swift'] },
       { name: 'bouffalant', level: 75, moves: ['head-charge', 'earthquake', 'stone-edge', 'swords-dance'] },
@@ -166,7 +166,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Unova',
     game: 'Black 2/White 2',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/612.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/2/2c/Black_2_White_2_Iris.png',
     team: [
       { name: 'hydreigon', level: 57, moves: ['dragon-pulse', 'fire-blast', 'focus-blast', 'surf'] },
       { name: 'druddigon', level: 57, moves: ['dragon-claw', 'thunder-punch', 'fire-punch', 'rock-slide'] },
@@ -184,7 +184,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Kalos',
     game: 'X/Y',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/5/52/XY_Diantha.png',
     team: [
       { name: 'hawlucha', level: 64, moves: ['flying-press', 'x-scissor', 'hone-claws', 'roost'] },
       { name: 'tyrantrum', level: 65, moves: ['head-smash', 'earthquake', 'crunch', 'dragon-claw'] },
@@ -202,7 +202,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Alola',
     game: 'Sun/Moon',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/745.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/4/4c/Sun_Moon_Professor_Kukui.png',
     team: [
       { name: 'lycanroc', level: 57, moves: ['stone-edge', 'crunch', 'accelerock', 'fire-fang'] },
       { name: 'braviary', level: 57, moves: ['brave-bird', 'shadow-claw', 'rock-slide', 'bulk-up'] },
@@ -220,7 +220,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Galar',
     game: 'Sword/Shield',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/f/f4/Sword_Shield_Leon.png',
     team: [
       { name: 'aegislash', level: 62, moves: ['shadow-ball', 'flash-cannon', 'shadow-sneak', 'kings-shield'] },
       { name: 'dragapult', level: 62, moves: ['dragon-darts', 'phantom-force', 'u-turn', 'thunder-wave'] },
@@ -238,7 +238,7 @@ export const trainers: Trainer[] = [
     title: 'Champion',
     region: 'Paldea',
     game: 'Scarlet/Violet',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/3/3e/Scarlet_Violet_Nemona.png',
     team: [
       { name: 'lycanroc', level: 65, moves: ['stone-edge', 'psychic-fangs', 'play-rough', 'accelerock'] },
       { name: 'altaria', level: 65, moves: ['dragon-pulse', 'moonblast', 'flamethrower', 'roost'] },
@@ -257,7 +257,7 @@ export const trainers: Trainer[] = [
     region: 'Sinnoh',
     game: 'Diamond/Pearl',
     type: 'electric',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/405.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/f/fb/Diamond_Pearl_Volkner.png',
     team: [
       { name: 'jolteon', level: 46, moves: ['thunder', 'shadow-ball', 'signal-beam', 'double-kick'] },
       { name: 'raichu', level: 46, moves: ['thunder', 'focus-blast', 'grass-knot', 'brick-break'] },
@@ -272,7 +272,7 @@ export const trainers: Trainer[] = [
     region: 'Hoenn',
     game: 'Ruby/Sapphire',
     type: 'fire',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/d/d0/Omega_Ruby_Alpha_Sapphire_Flannery.png',
     team: [
       { name: 'numel', level: 24, moves: ['overheat', 'take-down', 'magnitude', 'sunny-day'] },
       { name: 'slugma', level: 24, moves: ['overheat', 'rock-slide', 'light-screen', 'sunny-day'] },
@@ -287,7 +287,7 @@ export const trainers: Trainer[] = [
     region: 'Unova',
     game: 'Black/White',
     type: 'electric',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/523.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/9/94/Black_White_Elesa.png',
     team: [
       { name: 'emolga', level: 25, moves: ['volt-switch', 'aerial-ace', 'pursuit', 'double-team'] },
       { name: 'emolga', level: 25, moves: ['volt-switch', 'aerial-ace', 'pursuit', 'double-team'] },
@@ -301,7 +301,7 @@ export const trainers: Trainer[] = [
     region: 'Kalos',
     game: 'X/Y',
     type: 'electric',
-    sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/695.png',
+    sprite: 'https://archives.bulbagarden.net/media/upload/e/e7/XY_Clemont.png',
     team: [
       { name: 'emolga', level: 35, moves: ['volt-switch', 'acrobatics', 'u-turn', 'light-screen'] },
       { name: 'magneton', level: 35, moves: ['thunderbolt', 'flash-cannon', 'volt-switch', 'thunder-wave'] },
