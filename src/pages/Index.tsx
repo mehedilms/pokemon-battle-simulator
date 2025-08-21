@@ -1,21 +1,33 @@
 
 import { useState } from 'react';
 import { Pokemon, Move } from '../types/pokemon';
+import { Trainer } from '../types/trainer';
 import PokemonSelector from '../components/PokemonSelector';
+import TrainerSelector from '../components/TrainerSelector';
 import MoveSelector from '../components/MoveSelector';
 import BattleField from '../components/BattleField';
+import TrainerBattleField from '../components/TrainerBattleField';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PixelText from '../components/PixelText';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Index = () => {
   const { t } = useLanguage();
+  const [mode, setMode] = useState<'pokemon' | 'trainer'>('pokemon');
+  
+  // Pokemon Battle State
   const [playerPokemon, setPlayerPokemon] = useState<Pokemon | null>(null);
   const [computerPokemon, setComputerPokemon] = useState<Pokemon | null>(null);
   const [playerMoves, setPlayerMoves] = useState<Move[]>([]);
   const [computerMoves, setComputerMoves] = useState<Move[]>([]);
   const [battleStarted, setBattleStarted] = useState(false);
   const [step, setStep] = useState<'select' | 'moves' | 'battle'>('select');
+
+  // Trainer Battle State
+  const [playerTrainer, setPlayerTrainer] = useState<Trainer | null>(null);
+  const [computerTrainer, setComputerTrainer] = useState<Trainer | null>(null);
+  const [trainerBattleStarted, setTrainerBattleStarted] = useState(false);
 
   const handleProceedToMoves = () => {
     if (playerPokemon && computerPokemon) {
@@ -37,10 +49,21 @@ const Index = () => {
     setComputerMoves([]);
     setBattleStarted(false);
     setStep('select');
+    
+    // Reset trainer battle state
+    setPlayerTrainer(null);
+    setComputerTrainer(null);
+    setTrainerBattleStarted(false);
   };
 
   const handleBackToSelection = () => {
     setStep('select');
+  };
+
+  const handleStartTrainerBattle = () => {
+    if (playerTrainer && computerTrainer) {
+      setTrainerBattleStarted(true);
+    }
   };
 
   return (
@@ -55,7 +78,26 @@ const Index = () => {
           </p>
         </div>
 
-        {step === 'select' ? (
+        {/* Mode Selection */}
+        {!battleStarted && !trainerBattleStarted && (
+          <div className="mb-8">
+            <Tabs value={mode} onValueChange={(value) => setMode(value as 'pokemon' | 'trainer')} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
+                <TabsTrigger value="pokemon" className="flex items-center gap-2">
+                  <PixelText>Mode Pokémon</PixelText>
+                </TabsTrigger>
+                <TabsTrigger value="trainer" className="flex items-center gap-2">
+                  <PixelText>Mode Dresseurs</PixelText>
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+        )}
+
+        {/* Pokemon Battle Mode */}
+        {mode === 'pokemon' && !trainerBattleStarted && (
+          <>
+            {step === 'select' ? (
           <div className="grid md:grid-cols-2 gap-8">
             <div className="animate-fade-in bg-white p-6 rounded-lg border border-pixels-border shadow-pixels">
               <h2 className="mb-4 text-center bg-pixels-primary py-2 rounded-md border border-transparent">
@@ -172,7 +214,7 @@ const Index = () => {
               </Button>
             </div>
           </div>
-        ) : step === 'moves' ? (
+            ) : step === 'moves' ? (
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="mb-4">
@@ -230,14 +272,67 @@ const Index = () => {
               </Button>
             </div>
           </div>
-        ) : (
-          <BattleField 
-            playerPokemon={playerPokemon} 
-            computerPokemon={computerPokemon}
-            playerMoves={playerMoves}
-            computerMoves={computerMoves}
-            onReset={handleReset}
-          />
+            ) : (
+              <BattleField 
+                playerPokemon={playerPokemon} 
+                computerPokemon={computerPokemon}
+                playerMoves={playerMoves}
+                computerMoves={computerMoves}
+                onReset={handleReset}
+              />
+            )}
+          </>
+        )}
+
+        {/* Trainer Battle Mode */}
+        {mode === 'trainer' && !battleStarted && (
+          <>
+            {!trainerBattleStarted ? (
+              <div className="space-y-8">
+                <div className="text-center">
+                  <PixelText className="text-2xl mb-4">Mode Combat de Dresseurs</PixelText>
+                  <PixelText className="text-sm text-muted-foreground">
+                    Choisissez deux dresseurs célèbres avec leurs équipes authentiques
+                  </PixelText>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="animate-fade-in bg-white p-6 rounded-lg border border-pixels-border shadow-pixels">
+                    <TrainerSelector 
+                      onTrainerSelect={setPlayerTrainer} 
+                      side="player"
+                      selectedTrainer={playerTrainer}
+                    />
+                  </div>
+                  
+                  <div className="animate-fade-in bg-white p-6 rounded-lg border border-pixels-border shadow-pixels" style={{animationDelay: '0.2s'}}>
+                    <TrainerSelector 
+                      onTrainerSelect={setComputerTrainer} 
+                      side="computer"
+                      selectedTrainer={computerTrainer}
+                    />
+                  </div>
+                </div>
+                
+                <div className="text-center mt-8">
+                  <Button 
+                    onClick={handleStartTrainerBattle}
+                    disabled={!playerTrainer || !computerTrainer}
+                    variant="pokemon"
+                    className="px-8 py-6 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    <PixelText>Commencer le Combat de Dresseurs</PixelText>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <TrainerBattleField 
+                playerTrainer={playerTrainer} 
+                computerTrainer={computerTrainer}
+                onReset={handleReset}
+              />
+            )}
+          </>
         )}
         
         <div className="mt-12 text-center">
